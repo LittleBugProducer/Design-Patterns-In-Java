@@ -6,5 +6,5 @@
 * [Third Chapter\(Adapter\)](third-chapteradapter.md)
 * [Fourth Chapter\(Facade\)](fourth-chapterfacade.md)
 * [Fifth Chapter\(Composite\)](fifth-chaptercomposite.md)
-* Sixth Chapter\(Bridge\)
+* [Sixth Chapter\(Bridge\)](sixth-chapterbridge.md)
 
