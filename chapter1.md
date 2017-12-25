@@ -1,3 +1,6 @@
-# First Chapter
+# 第一章 绪论
 
-GitBook allows you to organize your book into chapters, each chapter is stored in a separate file like this one.
+为什么学习设计模式？
+
+因为要**找工作**
+
