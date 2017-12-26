@@ -14,9 +14,9 @@
 
 由于本人能力有限，难免有认知错误，欢迎指正。
 
+**源码下载**
 
-
-源码下载：https://github.com/LittleBugProducer/Design-Patterns-In-Java-source-code
+[https://github.com/LittleBugProducer/Design-Patterns-In-Java-source-code](https://github.com/LittleBugProducer/Design-Patterns-In-Java-source-code)
 
 **联系本人**
 
