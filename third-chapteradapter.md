@@ -72,73 +72,75 @@
 
 对象适配器案例\([http://blog.csdn.net/kkforwork/article/details/46348245\)：](http://blog.csdn.net/kkforwork/article/details/46348245%29：)
 
-`//已有功能类`
+`//已有功能类`
 
-`public class Action {`
+`public class Action {`
 
-`	public int ActionMethod() {`
+`public int ActionMethod() {`
 
-`		System.out.println("已有功能：提供一个苹果");`
+`System.out.println("已有功能：提供一个苹果");`
 
-`		return 1;`
-
-`	}`
-
-`}`
-
-`//客户类`
-
-`public abstract class Customer`
-
-`{`
-
-`    public abstract  int CustomMethod();//要买一个苹果，切成块please`
-
-`}`
-
-`//适配器类`
-
-`public class AdapterClass extends Customer{`
-
-`	private Action ac;	`
-
-`	public AdapterClass() {`
-
-`		ac = new Action(); `
-
-`	}	`
-
-`	@Override`
-
-`	public int CustomMethod() {`
-
-`		int res = ac.ActionMethod();`
-
-`		res*=10;`
-
-`		System.out.println("服务：把一个苹果切成10小块");`
-
-`		return res;`
-
-`	}`
+`return 1;`
 
 `}`
 
-`//测试类`
+`}`
 
-`public class Test {`
+`//客户类`
 
-`	public static void main(String[] args) {`
+`public abstract class Customer`
 
-`		Customer customer = new AdapterClass();`
+`{`
 
-`		int res = customer.CustomMethod();`
-
-`		System.out.println(res+"块苹果");`
-
-`	}`
+`public abstract  int CustomMethod();//要买一个苹果，切成块please`
 
 `}`
 
+`//适配器类`
 
+`public class AdapterClass extends Customer{`
+
+\`    private Action ac;
+
+\`
+
+`public AdapterClass() {`
+
+`ac = new Action();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public int CustomMethod() {`
+
+`int res = ac.ActionMethod();`
+
+`res*=10;`
+
+`System.out.println("服务：把一个苹果切成10小块");`
+
+`return res;`
+
+\`    }
+
+`}`
+
+`//测试类`
+
+\`public class Test {
+
+`public static void main(String[] args) {`
+
+`Customer customer = new AdapterClass();`
+
+`int res = customer.CustomMethod();`
+
+`System.out.println(res+"块苹果");`
+
+`}`
+
+`}`
 
