@@ -30,7 +30,7 @@ private Salary salary;
 
 `}`
 
-public class Salary {
+`public class Salary {`
 
 ```
 private String from;
@@ -42,11 +42,11 @@ private double Amount;
 
 `//getter and settter...`
 
-}
+`}`
 
-//一个子系统
+`//一个子系统`
 
-public class EmployeeDataAccess {
+`public class EmployeeDataAccess {`
 
 ```
 public void saveEmployee\(Employee employee\) {
@@ -64,43 +64,41 @@ public void deleteEmployee\(Employee employee\)
 }
 ```
 
-}
+`}`
 
-//门面类facade
+`//门面类facade`
 
-public class DataAccess {
+`public class DataAccess {`
+
+```
+private EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess\(\);
+
+private SalaryDataAccess salaryDataAccess = new SalaryDataAccess\(\);
 
 
 
-	private EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess\(\);
+public void saveEmployee\(Employee employee\) {
 
-	private SalaryDataAccess salaryDataAccess = new SalaryDataAccess\(\);
+    employeeDataAccess.saveEmployee\(employee\);
 
-	
-
-	public void saveEmployee\(Employee employee\) {
-
-		employeeDataAccess.saveEmployee\(employee\);
-
-		salaryDataAccess.saveSalary\(employee.getSalary\(\)\);
-
-	}
-
-	public void removeEmployee\(Employee employee\) {
-
-		employeeDataAccess.deleteEmployee\(employee\);
-
-		salaryDataAccess.deleteSalary\(employee.getSalary\(\)\);
-
-	}
-
-	
+    salaryDataAccess.saveSalary\(employee.getSalary\(\)\);
 
 }
 
-//另一个子系统
+public void removeEmployee\(Employee employee\) {
 
-public class SalaryDataAccess {
+    employeeDataAccess.deleteEmployee\(employee\);
+
+    salaryDataAccess.deleteSalary\(employee.getSalary\(\)\);
+
+}
+```
+
+`}`
+
+`//另一个子系统`
+
+`public class SalaryDataAccess {`
 
 ```
 public void saveSalary\(Salary salary\) {
@@ -116,11 +114,11 @@ public void deleteSalary\(Salary salary\) {
 }
 ```
 
-}
+`}`
 
-//测试类
+`//测试类`
 
-public class Test {
+`public class Test {`
 
 ```
 public static void main\(String\[\] args\) {
@@ -159,7 +157,7 @@ public static void main\(String\[\] args\) {
 
         }
 
-    }\);
+    });
 
     dataAccess.saveEmployee\(employee\);
 
@@ -168,7 +166,7 @@ public static void main\(String\[\] args\) {
 }
 ```
 
-}
+`}`
 
 测试结果：
 
