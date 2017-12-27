@@ -16,15 +16,123 @@
 
 案例：
 
-public class Employee {
+`public class Employee {`
 
-	private String name;
+```
+private String name;
 
-	private int age;
+private int age;
 
-	private Salary salary;
+private Salary salary;
+```
 
-//getter and settter...
+`//getter and settter...`
+
+`}`
+
+public class Salary {
+
+	private String from;
+
+	private String to;
+
+	private double Amount;
+
+	`//getter and settter...`
 
 }
+
+//一个子系统
+
+public class EmployeeDataAccess {
+
+	public void saveEmployee\(Employee employee\) {
+
+		System.out.println\("Save employee to database."\);
+
+	}
+
+	public void deleteEmployee\(Employee employee\)
+
+	{
+
+		System.out.println\("Remove employee from database"\);
+
+	}
+
+}
+
+//另一个子系统
+
+public class SalaryDataAccess {
+
+	public void saveSalary\(Salary salary\) {
+
+		System.out.println\("Save salary to database"\);
+
+	}
+
+	public void deleteSalary\(Salary salary\) {
+
+		System.out.println\("Remove salary from database."\);
+
+	}
+
+}
+
+//测试类
+
+public class Test {
+
+	public static void main\(String\[\] args\) {
+
+		DataAccess dataAccess = new DataAccess\(\);
+
+		Employee employee = new Employee\(\);
+
+		employee.setName\("xiao hong"\);
+
+		employee.setAge\(22\);
+
+		employee.setSalary\(new Salary\(\) {
+
+			@Override
+
+			public void setFrom\(String from\) {
+
+				super.setFrom\("2017-12-27"\);
+
+			};
+
+			@Override
+
+			public void setTo\(String to\) {
+
+				super.setTo\("2018-12-27"\);
+
+			}
+
+			@Override
+
+			public void setAmount\(double amount\) {
+
+				super.setTo\("2018-12-27"\);
+
+			}
+
+		}\);
+
+		dataAccess.saveEmployee\(employee\);
+
+		dataAccess.removeEmployee\(employee\);
+
+	}
+
+}
+
+测试结果：
+
+![](/assets/image4_1.png)
+
+
 
