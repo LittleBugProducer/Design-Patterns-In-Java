@@ -2,7 +2,7 @@
 
 1.概述
 
-外观模式（Facade）,他隐藏了系统的复杂性，并向客户端提供了一个可以访问系统的接口。这种类型的设计模式属于结构性模式。为子系统中的一组接口提供了一个统一的访问接口，这个接口使得子系统更容易被访问或者使用。\([https://www.cnblogs.com/lthIU/p/5860607.html\](https://www.cnblogs.com/lthIU/p/5860607.html\)\)
+外观模式（Facade）,他隐藏了系统的复杂性，并向客户端提供了一个可以访问系统的接口。这种类型的设计模式属于结构性模式。为子系统中的一组接口提供了一个统一的访问接口，这个接口使得子系统更容易被访问或者使用。\([https://www.cnblogs.com/lthIU/p/5860607.html\](https://www.cnblogs.com/lthIU/p/5860607.html%29\)
 
 2.模式中的角色
 
@@ -12,7 +12,19 @@
 
 3）客户角色:通过调用Facede来完成要实现的功能。
 
-\([https://www.cnblogs.com/lthIU/p/5860607.html\](https://www.cnblogs.com/lthIU/p/5860607.html\)\)
+\([https://www.cnblogs.com/lthIU/p/5860607.html\](https://www.cnblogs.com/lthIU/p/5860607.html%29\)
 
+案例：
 
+public class Employee {
+
+	private String name;
+
+	private int age;
+
+	private Salary salary;
+
+//getter and settter...
+
+}
 
