@@ -32,13 +32,15 @@ private Salary salary;
 
 public class Salary {
 
-	private String from;
+```
+private String from;
 
-	private String to;
+private String to;
 
-	private double Amount;
+private double Amount;
+```
 
-	`//getter and settter...`
+`//getter and settter...`
 
 }
 
@@ -46,19 +48,53 @@ public class Salary {
 
 public class EmployeeDataAccess {
 
+```
+public void saveEmployee\(Employee employee\) {
+
+    System.out.println\("Save employee to database."\);
+
+}
+
+public void deleteEmployee\(Employee employee\)
+
+{
+
+    System.out.println\("Remove employee from database"\);
+
+}
+```
+
+}
+
+//门面类facade
+
+public class DataAccess {
+
+
+
+	private EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess\(\);
+
+	private SalaryDataAccess salaryDataAccess = new SalaryDataAccess\(\);
+
+	
+
 	public void saveEmployee\(Employee employee\) {
 
-		System.out.println\("Save employee to database."\);
+		employeeDataAccess.saveEmployee\(employee\);
+
+		salaryDataAccess.saveSalary\(employee.getSalary\(\)\);
 
 	}
 
-	public void deleteEmployee\(Employee employee\)
+	public void removeEmployee\(Employee employee\) {
 
-	{
+		employeeDataAccess.deleteEmployee\(employee\);
 
-		System.out.println\("Remove employee from database"\);
+		salaryDataAccess.deleteSalary\(employee.getSalary\(\)\);
 
 	}
+
+	
 
 }
 
@@ -66,17 +102,19 @@ public class EmployeeDataAccess {
 
 public class SalaryDataAccess {
 
-	public void saveSalary\(Salary salary\) {
+```
+public void saveSalary\(Salary salary\) {
 
-		System.out.println\("Save salary to database"\);
+    System.out.println\("Save salary to database"\);
 
-	}
+}
 
-	public void deleteSalary\(Salary salary\) {
+public void deleteSalary\(Salary salary\) {
 
-		System.out.println\("Remove salary from database."\);
+    System.out.println\("Remove salary from database."\);
 
-	}
+}
+```
 
 }
 
@@ -84,55 +122,55 @@ public class SalaryDataAccess {
 
 public class Test {
 
-	public static void main\(String\[\] args\) {
+```
+public static void main\(String\[\] args\) {
 
-		DataAccess dataAccess = new DataAccess\(\);
+    DataAccess dataAccess = new DataAccess\(\);
 
-		Employee employee = new Employee\(\);
+    Employee employee = new Employee\(\);
 
-		employee.setName\("xiao hong"\);
+    employee.setName\("xiao hong"\);
 
-		employee.setAge\(22\);
+    employee.setAge\(22\);
 
-		employee.setSalary\(new Salary\(\) {
+    employee.setSalary\(new Salary\(\) {
 
-			@Override
+        @Override
 
-			public void setFrom\(String from\) {
+        public void setFrom\(String from\) {
 
-				super.setFrom\("2017-12-27"\);
+            super.setFrom\("2017-12-27"\);
 
-			};
+        };
 
-			@Override
+        @Override
 
-			public void setTo\(String to\) {
+        public void setTo\(String to\) {
 
-				super.setTo\("2018-12-27"\);
+            super.setTo\("2018-12-27"\);
 
-			}
+        }
 
-			@Override
+        @Override
 
-			public void setAmount\(double amount\) {
+        public void setAmount\(double amount\) {
 
-				super.setTo\("2018-12-27"\);
+            super.setTo\("2018-12-27"\);
 
-			}
+        }
 
-		}\);
+    }\);
 
-		dataAccess.saveEmployee\(employee\);
+    dataAccess.saveEmployee\(employee\);
 
-		dataAccess.removeEmployee\(employee\);
+    dataAccess.removeEmployee\(employee\);
 
-	}
+}
+```
 
 }
 
 测试结果：
 
 ![](/assets/image4_1.png)
-
-
 
