@@ -157,7 +157,7 @@ public static void main\(String\[\] args\) {
 
         }
 
-    });
+    }\);
 
     dataAccess.saveEmployee\(employee\);
 
