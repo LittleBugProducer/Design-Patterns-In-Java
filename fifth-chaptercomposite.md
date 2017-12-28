@@ -1,6 +1,6 @@
 # 第五章 合成\(Composite\)模式
 
-\([http://blog.csdn.net/ltx06/article/details/49048051\](http://blog.csdn.net/ltx06/article/details/49048051\)\)
+\([http://blog.csdn.net/ltx06/article/details/49048051\](http://blog.csdn.net/ltx06/article/details/49048051%29\)
 
 合成模式属于对象的结构模式，有时又叫做“部分——整体”模式。合成模式将对象组织到树结构中，可以用来描述整体与部分的关系。合成模式可以使客户端将单纯元素与复合元素同等看待。
 
@@ -20,179 +20,139 @@
 
 案例:
 
-`//抽象构件角色类q`
+`//抽象构件角色类`
 
-`public interface Component {`
+`public interface Component {`
 
-``
-
-`	public void printStruct(String preStr);`
-
-`}`
-
-`//树叶`
-
-`public class Leaf implements Component{`
-
-``
-
-`	private String name;`
-
-`	`
-
-`	public Leaf(String name) {`
-
-`		this.name = name;`
-
-`	}`
-
-`	`
-
-`	@Override`
-
-`	public void printStruct(String preStr) {`
-
-`		System.out.println(preStr+"-"+name);		`
-
-`	}`
-
-``
-
-`	public String getName() {`
-
-`		return name;`
-
-`	}`
-
-``
-
-`	public void setName(String name) {`
-
-`		this.name = name;`
-
-`	}`
-
-``
-
-`	`
+`public void printStruct(String preStr);`
 
 `}`
 
-`//树枝`
+`//树叶`
 
-`public class Composite implements Component{`
+`public class Leaf implements Component{`
 
-``
+`private String name;`
 
-`	private List<Component> childComponents = new ArrayList<Component>();`
+`public Leaf(String name) {`
 
-`	`
-
-`	private String name;`
-
-`	`
-
-`	public Composite(String name) {`
-
-`		this.name = name;`
-
-`	}`
-
-`	`
-
-`	public void addChild(Component child) {`
-
-`		childComponents.add(child);`
-
-`		`
-
-`	}`
-
-`	`
-
-`	public void removeChild(int index) {`
-
-`		childComponents.remove(index);`
-
-`	}`
-
-`	`
-
-`	public List<Component> getChild(){`
-
-`		return childComponents;`
-
-`	}`
-
-`	`
-
-`	@Override`
-
-`	public void printStruct(String preStr) {`
-
-`		System.out.println(preStr+"+"+this.name);`
-
-`		if(this.childComponents!=null) {`
-
-`			preStr+="  ";`
-
-`			for(Component c:childComponents) {`
-
-`				c.printStruct(preStr);`
-
-`			}`
-
-`		}`
-
-`	}`
-
-`	`
-
-``
+`this.name = name;`
 
 `}`
 
-`//客户端类`
+`@Override`
 
-`public class Test {`
+`public void printStruct(String preStr) {`
 
-``
+`System.out.println(preStr+"-"+name);`
 
-`	public static void main(String[] args) {`
+`}`
 
-`		`
+`public String getName() {`
 
-`		Composite root = new Composite("服装");`
+`return name;`
 
-`		Composite c1 = new Composite("男装");`
+`}`
 
-`		Composite c2 = new Composite("女装");`
+`public void setName(String name) {`
 
-`		Leaf leaf1 = new Leaf("衬衫");`
+`this.name = name;`
 
-`		Leaf leaf2 = new Leaf("夹克");`
+`}`
 
-`		Leaf leaf3 = new Leaf("裙子");`
+`}`
 
-`		Leaf leaf4 = new Leaf("套装");`
+`//树枝`
 
-`		root.addChild(c1);`
+`public class Composite implements Component{`
 
-`		root.addChild(c2);`
+`private List<Component> childComponents = new ArrayList<Component>();`
 
-`		c1.addChild(leaf1);`
+`private String name;`
 
-`		c1.addChild(leaf2);`
+`public Composite(String name) {`
 
-`		c2.addChild(leaf3);`
+`this.name = name;`
 
-`		c2.addChild(leaf4);`
+`}`
 
-`		root.printStruct("");`
+`public void addChild(Component child) {`
 
-`	}`
+`childComponents.add(child);`
 
-`}`
+`}`
+
+`public void removeChild(int index) {`
+
+`childComponents.remove(index);`
+
+`}`
+
+`public List<Component> getChild(){`
+
+`return childComponents;`
+
+`}`
+
+`@Override`
+
+`public void printStruct(String preStr) {`
+
+`System.out.println(preStr+"+"+this.name);`
+
+`if(this.childComponents!=null) {`
+
+`preStr+="  ";`
+
+`for(Component c:childComponents) {`
+
+`c.printStruct(preStr);`
+
+`}`
+
+`}`
+
+`}`
+
+`}`
+
+`//客户端类`
+
+`public class Test {`
+
+`public static void main(String[] args) {`
+
+`Composite root = new Composite("服装");`
+
+`Composite c1 = new Composite("男装");`
+
+`Composite c2 = new Composite("女装");`
+
+`Leaf leaf1 = new Leaf("衬衫");`
+
+`Leaf leaf2 = new Leaf("夹克");`
+
+`Leaf leaf3 = new Leaf("裙子");`
+
+`Leaf leaf4 = new Leaf("套装");`
+
+`root.addChild(c1);`
+
+`root.addChild(c2);`
+
+`c1.addChild(leaf1);`
+
+`c1.addChild(leaf2);`
+
+`c2.addChild(leaf3);`
+
+`c2.addChild(leaf4);`
+
+`root.printStruct("");`
+
+`}`
+
+`}`
 
 测试结果：
 
@@ -202,157 +162,155 @@
 
 安全式合成模式的缺点是不够透明，因为树叶类和树枝类将具有不同的接口。
 
-
-
 ### 透明式合成模式的结构
 
 与安全式的合成模式不同的是，透明式的合成模式要求所有的具体构件类，不论树枝构件还是树叶构件，均符合一个固定接口。
 
 案例:
 
-`//抽象构建类`
+`//抽象构建类`
 
-`public abstract class Component {`
+`public abstract class Component {`
 
-`	public abstract void printStruct(String preStr);`
+`public abstract void printStruct(String preStr);`
 
-`	public void addChild(Component child) {`
+`public void addChild(Component child) {`
 
-`		throw new UnsupportedOperationException("对象不支持此功能");`
-
-`	}`
-
-`	public void removeChild(int index) {`
-
-`		throw new UnsupportedOperationException("对象不支持此功能");`
-
-`	}`
-
-`	public List<Component>getChild(){`
-
-`		throw new UnsupportedOperationException("对象不支持此功能");`
-
-`	}`
+`throw new UnsupportedOperationException("对象不支持此功能");`
 
 `}`
 
-`//树叶`
+`public void removeChild(int index) {`
 
-`public class Leaf extends Component{`
-
-`	private String name;`
-
-`	public Leaf(String name) {`
-
-`		this.name = name;`
-
-`	}`
-
-`	@Override`
-
-`	public void printStruct(String preStr) {`
-
-`		System.out.println(preStr+"-"+name);`
-
-`	}`
-
-`}`
-
-`//树枝`
-
-`public class Composite extends Component{`
-
-`	private List<Component>childComponents = new ArrayList<Component>();`
-
-`	private String name;`
-
-`	public Composite(String name) {`
-
-`		this.name=name;		`
-
-`	}`
-
-`	@Override`
-
-`	public void printStruct(String preStr) {`
-
-`		System.out.println(preStr+"+"+this.name);`
-
-`		if(this.childComponents!=null) {`
-
-`			preStr+=" ";`
-
-`			for(Component c:childComponents) {`
-
-`				c.printStruct(preStr);`
-
-`			}`
-
-`		}`
-
-`	}`
-
-`	@Override`
-
-`	public void addChild(Component child) {`
-
-`		childComponents.add(child);`
-
-`	}`
-
-`	@Override`
-
-`	public void removeChild(int index) {`
-
-`		childComponents.remove(index);`
-
-`	}`
-
-`	@Override`
-
-`	public List<Component>getChild(){`
-
-`		return childComponents;`
-
-`	}`
+`throw new UnsupportedOperationException("对象不支持此功能");`
 
 `}`
 
-`//客户端类`
+`public List<Component>getChild(){`
 
-`public class Test {`
+`throw new UnsupportedOperationException("对象不支持此功能");`
 
-`	public static void main(String[] args) {`
+`}`
 
-`		Component root = new Composite("服装");`
+`}`
 
-`		Component c1 = new Composite("男装");`
+`//树叶`
 
-`		Component c2 = new Composite("女装");`
+`public class Leaf extends Component{`
 
-`		Component leaf1 = new Leaf("衬衫");`
+`private String name;`
 
-`		Component leaf2 = new Leaf("夹克");`
+`public Leaf(String name) {`
 
-`		Component leaf3 = new Leaf("裙子");`
+`this.name = name;`
 
-`		Component leaf4 = new Leaf("套装");`
+`}`
 
-`		root.addChild(c1);`
+`@Override`
 
-`		root.addChild(c2);`
+`public void printStruct(String preStr) {`
 
-`		c1.addChild(leaf1);`
+`System.out.println(preStr+"-"+name);`
 
-`		c1.addChild(leaf2);`
+`}`
 
-`		c2.addChild(leaf3);`
+`}`
 
-`		c2.addChild(leaf4);`
+`//树枝`
 
-`		root.printStruct("");`
+`public class Composite extends Component{`
 
-`	}`
+`private List<Component>childComponents = new ArrayList<Component>();`
+
+`private String name;`
+
+`public Composite(String name) {`
+
+`this.name=name;`
+
+`}`
+
+`@Override`
+
+`public void printStruct(String preStr) {`
+
+`System.out.println(preStr+"+"+this.name);`
+
+`if(this.childComponents!=null) {`
+
+`preStr+=" ";`
+
+`for(Component c:childComponents) {`
+
+`c.printStruct(preStr);`
+
+`}`
+
+`}`
+
+`}`
+
+`@Override`
+
+`public void addChild(Component child) {`
+
+`childComponents.add(child);`
+
+`}`
+
+`@Override`
+
+`public void removeChild(int index) {`
+
+`childComponents.remove(index);`
+
+`}`
+
+`@Override`
+
+`public List<Component>getChild(){`
+
+`return childComponents;`
+
+`}`
+
+`}`
+
+`//客户端类`
+
+`public class Test {`
+
+`public static void main(String[] args) {`
+
+`Component root = new Composite("服装");`
+
+`Component c1 = new Composite("男装");`
+
+`Component c2 = new Composite("女装");`
+
+`Component leaf1 = new Leaf("衬衫");`
+
+`Component leaf2 = new Leaf("夹克");`
+
+`Component leaf3 = new Leaf("裙子");`
+
+`Component leaf4 = new Leaf("套装");`
+
+`root.addChild(c1);`
+
+`root.addChild(c2);`
+
+`c1.addChild(leaf1);`
+
+`c1.addChild(leaf2);`
+
+`c2.addChild(leaf3);`
+
+`c2.addChild(leaf4);`
+
+`root.printStruct("");`
+
+`}`
 
 `}`
 
