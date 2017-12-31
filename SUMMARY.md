@@ -9,7 +9,7 @@
 * [Sixth Chapter\(Bridge\)](sixth-chapterbridge.md)
 * Seventh Chapter
 * Eighth Chapter\(Singleton\)
-* Nineth Chapter\(Observer\)
+* [Nineth Chapter\(Observer\)](nineth-chapterobserver.md)
 * [Tenth Chapter\(Mediator\)](tenth-chaptermediator.md)
 * [Eleventh Chapter\(Proxy\)](eleventh-chapterproxy.md)
 * [Twelfth Chapter\(Chain Of Responsibility\)](twelfth-chapterchain-of-responsibility.md)
