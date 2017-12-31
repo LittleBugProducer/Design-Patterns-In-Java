@@ -11,7 +11,7 @@
 * Eighth Chapter\(Singleton\)
 * Nineth Chapter\(Observer\)
 * Tenth Chapter\(Mediator\)
-* Eleventh Chapter\(Proxy\)
+* [Eleventh Chapter\(Proxy\)](eleventh-chapterproxy.md)
 * [Twelfth Chapter\(Chain Of Responsibility\)](twelfth-chapterchain-of-responsibility.md)
 * [Thirteenth Chapter\(Flyweight\)](thirteenth-chapterflyweight.md)
 
