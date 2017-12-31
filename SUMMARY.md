@@ -7,7 +7,7 @@
 * [Fourth Chapter\(Facade\)](fourth-chapterfacade.md)
 * [Fifth Chapter\(Composite\)](fifth-chaptercomposite.md)
 * [Sixth Chapter\(Bridge\)](sixth-chapterbridge.md)
-* Seventh Chapter
+* [Seventh Chapter](seventh-chapter.md)
 * [Eighth Chapter\(Singleton\)](eighth-chaptersingleton.md)
 * [Nineth Chapter\(Observer\)](nineth-chapterobserver.md)
 * [Tenth Chapter\(Mediator\)](tenth-chaptermediator.md)
