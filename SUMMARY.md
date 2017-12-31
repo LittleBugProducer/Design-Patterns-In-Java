@@ -7,4 +7,11 @@
 * [Fourth Chapter\(Facade\)](fourth-chapterfacade.md)
 * [Fifth Chapter\(Composite\)](fifth-chaptercomposite.md)
 * [Sixth Chapter\(Bridge\)](sixth-chapterbridge.md)
+* Seventh Chapter
+* Eighth Chapter\(Singleton\)
+* Nineth Chapter\(Observer\)
+* Tenth Chapter\(Mediator\)
+* Eleventh Chapter\(Proxy\)
+* Twelfth Chapter\(Chain Of Responsibility\)
+* Thirteenth Chapter\(Flyweight\)
 
