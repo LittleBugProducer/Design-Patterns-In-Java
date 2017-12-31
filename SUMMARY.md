@@ -8,7 +8,7 @@
 * [Fifth Chapter\(Composite\)](fifth-chaptercomposite.md)
 * [Sixth Chapter\(Bridge\)](sixth-chapterbridge.md)
 * Seventh Chapter
-* Eighth Chapter\(Singleton\)
+* [Eighth Chapter\(Singleton\)](eighth-chaptersingleton.md)
 * [Nineth Chapter\(Observer\)](nineth-chapterobserver.md)
 * [Tenth Chapter\(Mediator\)](tenth-chaptermediator.md)
 * [Eleventh Chapter\(Proxy\)](eleventh-chapterproxy.md)
