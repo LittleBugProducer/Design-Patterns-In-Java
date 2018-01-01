@@ -152,7 +152,7 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 `}`
 
-三：枚举\(http://blog.csdn.net/qq\_29542611/article/details/52905516\)
+三：枚举\([http://blog.csdn.net/qq\_29542611/article/details/52905516\](http://blog.csdn.net/qq_29542611/article/details/52905516\)\)
 
 `public enum Singleton5 {`
 
@@ -198,15 +198,139 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 `//单例模式的测试类`
 
-`public class Test {`
+`public class Test {`
 
-`	public static void main(String[] args) {`
+`public static void main(String[] args) {`
 
-`		Singleton5 in = Singleton5.SingletonEnum;`
+`Singleton5 in = Singleton5.SingletonEnum;`
 
-`		System.out.println(in.getStr());`
+`System.out.println(in.getStr());`
 
-`		System.out.println(in.getNum());`
+`System.out.println(in.getNum());`
+
+`}`
+
+`}`
+
+运行结果：
+
+![](/assets/image8_1.png)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+恶汉式、懒汉式的方式还不能防止反射来实现多个实例，通过反射的方式，设置ACcessible.setAccessible方法可以调用私有的构造器，可以修改构造器，让它在被要求创建第二个实例的时候抛出异常。
+
+其实这样还不能保证单例，当序列化后，反序列化是还可以创建一个新的实例，在单例类中添加readResolve\(\)方法进行防止。
+
+代码如下：
+
+`public class Singleton implements Serializable{`
+
+`	private static final long serialVersionUID = 1L;`
+
+`	private static Singleton instance = null;`
+
+`	private static int i = 1;`
+
+`	private Singleton() {`
+
+`		if(i == 1) {`
+
+`			i++;`
+
+`		}else {`
+
+`			throw new RuntimeException("只能调用一次构造函数");`
+
+`		}`
+
+`		System.out.println("调用Singleton的私有构造器");`
+
+`	}`
+
+`	public static synchronized Singleton getInstance() {`
+
+`		if(instance==null) {`
+
+`			synchronized (Singleton.class) {`
+
+`				if(instance==null) {`
+
+`					instance = new Singleton();`
+
+`				}				`
+
+`			}`
+
+`		}`
+
+`		return instance;`
+
+`	}`
+
+`	public Object readResolve() {`
+
+`		return instance;`
+
+`	}`
+
+`	public static void main(String[] args) throws Exception{`
+
+`		//test2();`
+
+`		test1();`
+
+`	}`
+
+`	public static void test1()throws Exception{`
+
+`		Singleton singleton = Singleton.getInstance();`
+
+`		Class c = Singleton.class;`
+
+`		Constructor privateConstructor;`
+
+`		try {`
+
+`			privateConstructor = c.getDeclaredConstructor();`
+
+`			privateConstructor.setAccessible(true);`
+
+`			privateConstructor.newInstance();`
+
+`		}catch (Exception e) {`
+
+`			// TODO: handle exception`
+
+`			e.printStackTrace();`
+
+`		}`
+
+`	}`
+
+`	public static void test2()throws Exception{`
+
+`		Singleton s = Singleton.getInstance();`
+
+`		ObjectOutputStream objectOutputStream = new ObjectOutputStream(`
+
+`				new FileOutputStream(new File("C:\\Users\\lC\\Desktop\\Singleton.txt")));`
+
+`		objectOutputStream.writeObject(s);`
+
+`		ObjectInputStream objectInputStream = new ObjectInputStream(`
+
+`				new FileInputStream(new File("C:\\Users\\lC\\Desktop\\Singleton.txt")));`
+
+`		Singleton s1 = (Singleton)objectInputStream.readObject();`
+
+`		System.out.println("s.hashCode():"+s.hashCode()+",s1.hashCode():"+s1.hashCode());`
+
+`		objectOutputStream.flush();`
+
+`		objectOutputStream.close();`
+
+`		objectInputStream.close();`
 
 `	}`
 
@@ -214,5 +338,15 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 运行结果：
 
-![](/assets/image8_1.png)
+不添加readResolve时test2：
+
+![](/assets/image8_2.png)
+
+添加readResolve时test2：
+
+![](/assets/image8_3.png)
+
+test1运行结果：
+
+![](/assets/image8_4.png)
 
