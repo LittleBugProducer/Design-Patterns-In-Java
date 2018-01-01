@@ -8,7 +8,7 @@
 
 单例模式的实现：
 
-懒汉式单例VS饿汉式单例\(http://blog.csdn.net/jason0539/article/details/23297037/\)
+懒汉式单例VS饿汉式单例\([http://blog.csdn.net/jason0539/article/details/23297037/\](http://blog.csdn.net/jason0539/article/details/23297037/\)\)
 
 从名字上来说，饿汉和懒汉，
 
@@ -38,23 +38,23 @@
 
 一：懒汉式单例
 
-`public class Singleton0 {`
+`public class Singleton0 {`
 
-`	private Singleton0() {}`
+`private Singleton0() {}`
 
-`	private static Singleton0 single=null;`
+`private static Singleton0 single=null;`
 
-`	public static Singleton0 getInstance() {`
+`public static Singleton0 getInstance() {`
 
-`		if(single==null) {`
+`if(single==null) {`
 
-`			single = new Singleton0();`
+`single = new Singleton0();`
 
-`		}`
+`}`
 
-`		return single;`
+`return single;`
 
-`	}`
+`}`
 
 `}`
 
@@ -64,17 +64,47 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 1、在getInstance方法上加同步
 
-`public class Singleton1 {`
+`public class Singleton1 {`
 
-`	private Singleton1() {}`
+`private Singleton1() {}`
 
-`	private static Singleton1 single=null;`
+`private static Singleton1 single=null;`
 
-`	public static synchronized Singleton1 getInstance() {`
+`public static synchronized Singleton1 getInstance() {`
+
+`if(single==null) {`
+
+`single = new Singleton1();`
+
+`}`
+
+`return single;`
+
+`}`
+
+`}`
+
+2、双重检查锁定
+
+`public class Singleton2 {`
+
+`	private Singleton2() {}`
+
+`	private static Singleton2 single=null;`
+
+`	public static synchronized Singleton2 getInstance() {`
 
 `		if(single==null) {`
 
-`			single = new Singleton1();`
+`			synchronized (Singleton2.class) {`
+
+`				if(single==null) {`
+
+`					single = new Singleton2();`
+
+`				}`
+
+`			}`
 
 `		}`
 
@@ -84,10 +114,85 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 `}`
 
+3、静态内部类
 
+`public class Singleton3 {`
 
+`	private static class LazyHolder{`
 
+`		private static final Singleton3 INSTANCE = new Singleton3();		`
 
-  
+`	}`
 
+`	private Singleton3() {}`
+
+`	public static final Singleton3 getInstance() {`
+
+`		return LazyHolder.INSTANCE;`
+
+`	}`
+
+`}`
+
+这种比上面1、2都好一些，既实现了线程安全，又避免了同步带来的性能影响。
+
+二、饿汉式单例
+
+`public class Singleton4 {`
+
+`	private Singleton4() {}`
+
+`	private static final Singleton4 single = new Singleton4();`
+
+`	public static Singleton4 getInstance() {`
+
+`		return single;`
+
+`	}`
+
+`}`
+
+三：枚举
+
+`public enum Singleton5 {`
+
+`	SingletonEnum("单例的枚举方式",34);`
+
+`	private String str;`
+
+`	private int num;	`
+
+`	public int getNum() {`
+
+`		return num;`
+
+`	}`
+
+`	public void setNum(int num) {`
+
+`		this.num = num;`
+
+`	}`
+
+`	public String getStr() {`
+
+`		return str;`
+
+`	}`
+
+`	public void setStr(String str) {`
+
+`		this.str = str;`
+
+`	}`
+
+`	private Singleton5(String str,int num) {`
+
+`		this.setStr(str);`
+
+`		this.setNum(num);`
+
+`	}`
+
+`}`
 
