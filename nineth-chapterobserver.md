@@ -12,7 +12,9 @@
 
 式定义了对象之间的一对多的依赖关系,这样,当"一"的一方状态发生变化时,它所依赖的"多"的一方都会收到通知并且自动更新.
 
-\([https://www.cnblogs.com/fingerboy/p/5468994.html\](https://www.cnblogs.com/fingerboy/p/5468994.html\)\)
+\([https://www.cnblogs.com/fingerboy/p/5468994.html\](https://www.cnblogs.com/fingerboy/p/5468994.html%29\)
+
+案例:
 
 
 
