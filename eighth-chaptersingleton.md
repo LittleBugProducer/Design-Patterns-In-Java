@@ -8,7 +8,7 @@
 
 单例模式的实现：
 
-懒汉式单例VS饿汉式单例\([http://blog.csdn.net/jason0539/article/details/23297037/\](http://blog.csdn.net/jason0539/article/details/23297037/\)\)
+懒汉式单例VS饿汉式单例\([http://blog.csdn.net/jason0539/article/details/23297037/\](http://blog.csdn.net/jason0539/article/details/23297037/%29\)
 
 从名字上来说，饿汉和懒汉，
 
@@ -86,51 +86,51 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 2、双重检查锁定
 
-`public class Singleton2 {`
+`public class Singleton2 {`
 
-`	private Singleton2() {}`
+`private Singleton2() {}`
 
-`	private static Singleton2 single=null;`
+`private static Singleton2 single=null;`
 
-`	public static synchronized Singleton2 getInstance() {`
+`public static synchronized Singleton2 getInstance() {`
 
-`		if(single==null) {`
+`if(single==null) {`
 
-`			synchronized (Singleton2.class) {`
+`synchronized (Singleton2.class) {`
 
-`				if(single==null) {`
+`if(single==null) {`
 
-`					single = new Singleton2();`
+`single = new Singleton2();`
 
-`				}`
+`}`
 
-`			}`
+`}`
 
-`		}`
+`}`
 
-`		return single;`
+`return single;`
 
-`	}`
+`}`
 
 `}`
 
 3、静态内部类
 
-`public class Singleton3 {`
+`public class Singleton3 {`
 
-`	private static class LazyHolder{`
+`private static class LazyHolder{`
 
-`		private static final Singleton3 INSTANCE = new Singleton3();		`
+`private static final Singleton3 INSTANCE = new Singleton3();`
 
-`	}`
+`}`
 
-`	private Singleton3() {}`
+`private Singleton3() {}`
 
-`	public static final Singleton3 getInstance() {`
+`public static final Singleton3 getInstance() {`
 
-`		return LazyHolder.INSTANCE;`
+`return LazyHolder.INSTANCE;`
 
-`	}`
+`}`
 
 `}`
 
@@ -138,61 +138,81 @@ Singleton通过将构造方法限定为private避免了类在外部被实例化�
 
 二、饿汉式单例
 
-`public class Singleton4 {`
+`public class Singleton4 {`
 
-`	private Singleton4() {}`
+`private Singleton4() {}`
 
-`	private static final Singleton4 single = new Singleton4();`
+`private static final Singleton4 single = new Singleton4();`
 
-`	public static Singleton4 getInstance() {`
+`public static Singleton4 getInstance() {`
 
-`		return single;`
+`return single;`
+
+`}`
+
+`}`
+
+三：枚举\(http://blog.csdn.net/qq\_29542611/article/details/52905516\)
+
+`public enum Singleton5 {`
+
+`SingletonEnum("单例的枚举方式",34);`
+
+`private String str;`
+
+`private int num;`
+
+`public int getNum() {`
+
+`return num;`
+
+`}`
+
+`public void setNum(int num) {`
+
+`this.num = num;`
+
+`}`
+
+`public String getStr() {`
+
+`return str;`
+
+`}`
+
+`public void setStr(String str) {`
+
+`this.str = str;`
+
+`}`
+
+`private Singleton5(String str,int num) {`
+
+`this.setStr(str);`
+
+`this.setNum(num);`
+
+`}`
+
+`}`
+
+`//单例模式的测试类`
+
+`public class Test {`
+
+`	public static void main(String[] args) {`
+
+`		Singleton5 in = Singleton5.SingletonEnum;`
+
+`		System.out.println(in.getStr());`
+
+`		System.out.println(in.getNum());`
 
 `	}`
 
 `}`
 
-三：枚举
+运行结果：
 
-`public enum Singleton5 {`
-
-`	SingletonEnum("单例的枚举方式",34);`
-
-`	private String str;`
-
-`	private int num;	`
-
-`	public int getNum() {`
-
-`		return num;`
-
-`	}`
-
-`	public void setNum(int num) {`
-
-`		this.num = num;`
-
-`	}`
-
-`	public String getStr() {`
-
-`		return str;`
-
-`	}`
-
-`	public void setStr(String str) {`
-
-`		this.str = str;`
-
-`	}`
-
-`	private Singleton5(String str,int num) {`
-
-`		this.setStr(str);`
-
-`		this.setNum(num);`
-
-`	}`
-
-`}`
+![](/assets/image8_1.png)
 
