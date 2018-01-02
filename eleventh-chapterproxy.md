@@ -175,7 +175,7 @@ IUserDao接口和UserDao的实现与上例相同
 
 总结:
 
- 代理对象不需要实现接口,但是目标对象一定要实现接口,否则不能用动态代理
+代理对象不需要实现接口,但是目标对象一定要实现接口,否则不能用动态代理
 
 ### Cglib代理 {#cglib代理}
 
@@ -195,79 +195,97 @@ Cglib子类代理实现方法:
 
 案例:
 
-`//被代理对象`
+`//被代理对象`
 
-`public class UserDao {`
+\`public class UserDao {
 
-`	public void save() {`
+\`
 
-`		System.out.println("----已经保存数据------");`
+`public void save() {`
 
-`	}`
-
-`}`
-
-`//代理工厂`
-
-`public class ProxyFactory implements MethodInterceptor{`
-
-`	private Object target;	`
-
-`	public ProxyFactory(Object target) {`
-
-`		this.target = target;`
-
-`	}	`
-
-`	public Object getProxyInstance() {`
-
-`		Enhancer enhancer = new Enhancer();`
-
-`		enhancer.setSuperclass(target.getClass());`
-
-`		enhancer.setCallback(this);`
-
-`		return enhancer.create();`
-
-`	}	`
-
-`	@Override`
-
-`	public Object intercept(Object arg0, Method arg1, Object[] arg2, MethodProxy arg3) throws Throwable {	`
-
-`		System.out.println("开始事务3");`
-
-`		Object returnValue = arg1.invoke(target, arg2);`
-
-`		System.out.println("提交事务...");`
-
-`		return returnValue;`
-
-`	}`
+`System.out.println("----已经保存数据------");`
 
 `}`
 
-`//测试类`
+`}`
 
-`public class Test {`
+`//代理工厂`
 
-`	public static void main(String[] args) {`
+\`public class ProxyFactory implements MethodInterceptor{
 
-`		UserDao target = new UserDao();`
+\`
 
-`		System.out.println(target.getClass());`
+\`    private Object target;
 
-`		UserDao proxy = (UserDao)new ProxyFactory(target).getProxyInstance();`
+\`
 
-`		System.out.println(proxy.getClass());`
+`public ProxyFactory(Object target) {`
 
-`		proxy.save();`
+`this.target = target;`
 
-`	}`
+\`    }
+
+\`
+
+`public Object getProxyInstance() {`
+
+`Enhancer enhancer = new Enhancer();`
+
+`enhancer.setSuperclass(target.getClass());`
+
+`enhancer.setCallback(this);`
+
+`return enhancer.create();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public Object intercept(Object arg0, Method arg1, Object[] arg2, MethodProxy arg3) throws Throwable {`
+
+`System.out.println("开始事务3");`
+
+`Object returnValue = arg1.invoke(target, arg2);`
+
+`System.out.println("提交事务...");`
+
+`return returnValue;`
+
+\`    }\`
+
+`}`
+
+`//测试类`
+
+\`public class Test {\`
+
+`public static void main(String[] args) {`
+
+`UserDao target = new UserDao();`
+
+`System.out.println(target.getClass());`
+
+`UserDao proxy = (UserDao)new ProxyFactory(target).getProxyInstance();`
+
+`System.out.println(proxy.getClass());`
+
+`proxy.save();`
+
+`}`
 
 `}`
 
 运行结果：
 
 ![](/assets/image11_3.png)
+
+ 在Spring的AOP编程中:
+
+ 如果加入容器的目标对象有实现接口,用JDK代理
+
+ 如果目标对象没有实现接口,用Cglib代理
+
+然而，运用代理模式会使得代理对象与被代理对象造成紧耦合。
 
