@@ -4,8 +4,7 @@
 
 使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，
 
-将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理他为止。  
-
+将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理他为止。
 
 ### 角色
 
@@ -19,169 +18,222 @@
 
 不同级别的领导，对于审批的额度是不一样的，比如，项目经理只能审批500元以内的申请；部门经理能审批1000元以内的申请；而总经理可以审核任意额度的申请。
 
-`//抽象处理者角色`
+`//抽象处理者角色`
 
-`public abstract class Handler {`
+\`public abstract class Handler {
 
-`	protected Handler successor = null;`
+\`
 
-`	public Handler getSuccessor() {`
+\`    protected Handler successor = null;
 
-`		return successor;`
+\`
 
-`	}`
+`public Handler getSuccessor() {`
 
-`	public void setSuccessor(Handler successor) {`
+`return successor;`
 
-`		this.successor = successor;`
+\`    }
 
-`	}	`
+\`
 
-`	public abstract String handleFeeRequest(String user,double fee);	`
+`public void setSuccessor(Handler successor) {`
 
-`}`
+`this.successor = successor;`
 
-`//具体处理者，项目经理`
+\`    }
 
-`public class ProjectManager extends Handler{`
+\`
 
-`	@Override`
+\`    public abstract String handleFeeRequest\(String user,double fee\);
 
-`	public String handleFeeRequest(String user, double fee) {`
-
-`		String string = "";`
-
-`		if(fee<500) {`
-
-`			if("zs".equals(user)) {`
-
-`				string="成功:项目经理已经批准 "+user+" 的聚餐费用，额度为 "+fee+" 美元";`
-
-`			}else {`
-
-`				string = "失败，项目经理要求你先干活";`
-
-`			}`
-
-`		}else {`
-
-`			if(getSuccessor()!=null) {`
-
-`				return getSuccessor().handleFeeRequest(user, fee);`
-
-`			}`
-
-`		}`
-
-`		return string;`
-
-`	}	`
+\`
 
 `}`
 
-`//具体处理者，部门经理`
+`//具体处理者，项目经理`
 
-`public class DepManager extends Handler{`
+\`public class ProjectManager extends Handler{
 
-`	@Override`
+\`
 
-`	public String handleFeeRequest(String user, double fee) {`
+`@Override`
 
-`		String str = "";`
+`public String handleFeeRequest(String user, double fee) {`
 
-`		if(fee<1000) {`
+`String string = "";`
 
-`			if("zs".equals(user)) {`
+`if(fee<500) {`
 
-`				str = "部门大大同意了 "+user+" 的聚餐申请 "+fee+" 美元";				`
+`if("zs".equals(user)) {`
 
-`			}else {`
+`string="成功:项目经理已经批准 "+user+" 的聚餐费用，额度为 "+fee+" 美元";`
 
-`				str="部门大大拒绝了你的聚餐申请";`
+`}else {`
 
-`			}`
-
-`		}else {`
-
-`			if(getSuccessor()!=null) {`
-
-`				return getSuccessor().handleFeeRequest(user, fee);`
-
-`			}`
-
-`		}`
-
-`		return str;`
-
-`	}	`
+`string = "失败，项目经理要求你先干活";`
 
 `}`
 
-`//具体处理者，总经理`
+`}else {`
 
-`public class GeneralManager extends Handler{`
+`if(getSuccessor()!=null) {`
 
-`	@Override`
-
-`	public String handleFeeRequest(String user, double fee) {`
-
-`		String str = "";`
-
-`		if(fee<10000) {`
-
-`			if("zs".equals(user)) {`
-
-`				str = "总经理同意了 "+user+" 的聚餐申请 "+fee+" 美元";				`
-
-`			}else {`
-
-`				str="boss拒绝了你的聚餐申请";`
-
-`			}`
-
-`		}else {`
-
-`			str = "总经理觉得你花太多不让你去聚餐";`
-
-`		}`
-
-`		return str;`
-
-`	}`
+`return getSuccessor().handleFeeRequest(user, fee);`
 
 `}`
 
-`//测试类`
+`}`
 
-`public class Test {`
+`return string;`
 
-`	public static void main(String[] args) {`
+\`    }
 
-`		Handler pm = new ProjectManager();`
+\`
 
-`		Handler dm = new DepManager();`
+`}`
 
-`		Handler gm = new GeneralManager();`
+`//具体处理者，部门经理`
 
-`		pm.setSuccessor(dm);`
+\`public class DepManager extends Handler{
 
-`		dm.setSuccessor(gm);`
+\`
 
-`		System.out.println(pm.handleFeeRequest("zs", 200));`
+`@Override`
 
-`		System.out.println(pm.handleFeeRequest("zs", 700));`
+`public String handleFeeRequest(String user, double fee) {`
 
-`		System.out.println(pm.handleFeeRequest("zs", 1500));`
+`String str = "";`
 
-`		System.out.println(pm.handleFeeRequest("zs", 15000));`
+`if(fee<1000) {`
 
-`	}`
+`if("zs".equals(user)) {`
 
-`}`
+`str = "部门大大同意了 "+user+" 的聚餐申请 "+fee+" 美元";`
+
+`}else {`
+
+`str="部门大大拒绝了你的聚餐申请";`
+
+`}`
+
+`}else {`
+
+`if(getSuccessor()!=null) {`
+
+`return getSuccessor().handleFeeRequest(user, fee);`
+
+`}`
+
+`}`
+
+`return str;`
+
+\`    }
+
+\`
+
+`}`
+
+`//具体处理者，总经理`
+
+\`public class GeneralManager extends Handler{
+
+\`
+
+`@Override`
+
+`public String handleFeeRequest(String user, double fee) {`
+
+`String str = "";`
+
+`if(fee<10000) {`
+
+`if("zs".equals(user)) {`
+
+`str = "总经理同意了 "+user+" 的聚餐申请 "+fee+" 美元";`
+
+`}else {`
+
+`str="boss拒绝了你的聚餐申请";`
+
+`}`
+
+`}else {`
+
+`str = "总经理觉得你花太多不让你去聚餐";`
+
+`}`
+
+`return str;`
+
+\`    }
+
+\`
+
+`}`
+
+`//测试类`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`Handler pm = new ProjectManager();`
+
+`Handler dm = new DepManager();`
+
+`Handler gm = new GeneralManager();`
+
+`pm.setSuccessor(dm);`
+
+`dm.setSuccessor(gm);`
+
+`System.out.println(pm.handleFeeRequest("zs", 200));`
+
+`System.out.println(pm.handleFeeRequest("zs", 700));`
+
+`System.out.println(pm.handleFeeRequest("zs", 1500));`
+
+`System.out.println(pm.handleFeeRequest("zs", 15000));`
+
+`}`
+
+`}`
 
 运行结果：
 
 ![](/assets/image12_1.png)
 
+职责链优点
 
+1. 改变内部的传递规则
+
+在内部，项目经理完全可以跳过人事部到那一关直接找到总经理。
+
+每个人都可以去动态地指定他的继任者。
+
+2. 可以从职责链任何一关开始。
+
+如果项目经理不在，可以直接去找部门经理，责任链还会继续，没有影响。
+
+3.用与不用的区别
+
+不用职责链的结构，我们需要和公司中的每一个层级都发生耦合关系。
+
+如果反映在代码上即使我们需要在一个类中去写上很多丑陋的if….else语句。
+
+如果用了职责链，相当于我们面对的是一个黑箱，我们只需要认识其中的一个部门，然后让黑箱内部去负责传递就好了
+
+  
+
+
+纯的与不纯的责任链模式
+
+一个纯的责任链模式要求一个具体的处理者对象只能在两个行为中选择一个：一是承担责任，而是把责任推给下家。不允许出现某一个具体处理者对象在承担了一部分责任后又 把责任向下传的情况。
+
+在一个纯的责任链模式里面，一个请求必须被某一个处理者对象所接收；在一个不纯的责任链模式里面，一个请求可以最终不被任何接收端对象所接收。
+
+纯的责任链模式的实际例子很难找到，一般看到的例子均是不纯的责任链模式的实现。
 
