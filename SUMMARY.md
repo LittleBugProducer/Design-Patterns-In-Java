@@ -15,7 +15,7 @@
 * [Twelfth Chapter\(Chain Of Responsibility\)](twelfth-chapterchain-of-responsibility.md)
 * [Thirteenth Chapter\(Flyweight\)](thirteenth-chapterflyweight.md)
 * [Fourteenth Chapter](fourteenth-chapter.md)
-* Fifteenth Chapter\(Builder\)
+* [Fifteenth Chapter\(Builder\)](fifteenth-chapterbuilder.md)
 * [Sixteenth Chapter\(Factory Method\)](sixteenth-chapter.md)
 * [Seventeenth Chapter\(Abstract Factory\)](seventeenth-chapterabstract-factory.md)
 * Eighteenth Chapter\(Prototype\)
