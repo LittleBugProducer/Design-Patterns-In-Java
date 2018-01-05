@@ -298,7 +298,7 @@
 
 《Effective Java》书中对Builder模式的描述：
 
-当遇到许多构造器参数时，不直接生成想要的对象，而是让客户端利用必要的参数调用构造器\(或者静态工厂\)，得到一个builder对象，然后客户端在builder对象上调用类似于setter的方法，来设置每个相关的可选参数，最后，客户端调用午餐的builder方法来生成不可变的对象。这个builder是它构建的类的静态成员。
+当遇到许多构造器参数时，不直接生成想要的对象，而是让客户端利用必要的参数调用构造器\(或者静态工厂\)，得到一个builder对象，然后客户端在builder对象上调用类似于setter的方法，来设置每个相关的可选参数，最后，客户端调用无参的builder方法来生成不可变的对象。这个builder是它构建的类的静态成员。
 
 案例：
 
@@ -448,5 +448,5 @@
 
 很明显产生了多余的Build对象以及Dirextor对象，消耗了内存。
 
-\([http://blog.csdn.net/seu\_calvin/article/details/52249885\](http://blog.csdn.net/seu_calvin/article/details/52249885\)\)
+\([http://blog.csdn.net/seu\_calvin/article/details/52249885\](http://blog.csdn.net/seu_calvin/article/details/52249885%29\)
 
