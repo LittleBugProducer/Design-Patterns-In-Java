@@ -22,7 +22,239 @@
 
 （2）需要生产的产品的属性相互依赖，这些属性的赋值顺序比较重要时（因为在调用ConcreteBuilder的赋值方法时是有先后顺序的）。
 
+\(http://blog.csdn.net/jason0539/article/details/44992733\)
+
 案例:
+
+`//Product`
+
+`public class Person {`
+
+`	private String head;`
+
+`	private String body;`
+
+`	private String foot;`
+
+`	public String getHead() {`
+
+`		return head;`
+
+`	}`
+
+`	public String getBody() {`
+
+`		return body;`
+
+`	}`
+
+`	public String getFoot() {`
+
+`		return foot;`
+
+`	}`
+
+`	public void setHead(String head) {`
+
+`		this.head = head;`
+
+`	}`
+
+`	public void setBody(String body) {`
+
+`		this.body = body;`
+
+`	}`
+
+`	public void setFoot(String foot) {`
+
+`		this.foot = foot;`
+
+`	}`
+
+`	@Override`
+
+`	public String toString() {`
+
+`		return "Person [head=" + head + ", body=" + body + ", foot=" + foot + "]";`
+
+`	}	`
+
+`}`
+
+`//男product`
+
+`public class Man extends Person{`
+
+`	public Man() {`
+
+`		System.out.println("开始建造男人");`
+
+`	}`
+
+`}`
+
+`//女Product`
+
+`public class Woman extends Person{`
+
+`	public Woman() {`
+
+`		System.out.println("开始建造女人");`
+
+`	}`
+
+`}`
+
+`//角色`
+
+`public interface Builder {`
+
+`	void buildHead();`
+
+`	void buildBody();`
+
+`	void buildFoot();`
+
+`	Person buildPerson();`
+
+`}`
+
+`//具体角色`
+
+`public class ManBuilder implements Builder{`
+
+`	Person person;	`
+
+`	public ManBuilder() {`
+
+`		person = new Man();`
+
+`	}	`
+
+`	@Override`
+
+`	public void buildHead() {`
+
+`		person.setHead("建造男人的脑袋");`
+
+`	}`
+
+`	@Override`
+
+`	public void buildBody() {`
+
+`		person.setBody("建造男人的身体");`
+
+`	}`
+
+`	@Override`
+
+`	public void buildFoot() {`
+
+`		person.setFoot("建造男人的脚");`
+
+`	}`
+
+`	@Override`
+
+`	public Person buildPerson() {`
+
+`		return person;`
+
+`	}	`
+
+`}`
+
+`//具体角色`
+
+`public class WomanBuilder implements Builder{`
+
+`	Person person;	`
+
+`	public WomanBuilder() {`
+
+`		person = new Woman();`
+
+`	}	`
+
+`	@Override`
+
+`	public void buildHead() {`
+
+`		person.setHead("建造女人的脑袋");`
+
+`	}`
+
+`	@Override`
+
+`	public void buildBody() {`
+
+`		person.setBody("建造女人的身体");`
+
+`	}`
+
+`	@Override`
+
+`	public void buildFoot() {`
+
+`		person.setFoot("建造女人的脚");`
+
+`	}`
+
+`	@Override`
+
+`	public Person buildPerson() {`
+
+`		return person;`
+
+`	}`
+
+`}`
+
+`//角色 director`
+
+`public class PersonDirector {`
+
+`	public Person constructPerson(Builder p) {`
+
+`		p.buildHead();`
+
+`		p.buildBody();`
+
+`		p.buildFoot();`
+
+`		return p.buildPerson();`
+
+`	}`
+
+`}`
+
+`//测试类`
+
+`public class Test {`
+
+`	public static void main(String[] args) {`
+
+`		PersonDirector pd = new PersonDirector();`
+
+`		Person womanPerson = pd.constructPerson(new WomanBuilder());`
+
+`		System.out.println(womanPerson);`
+
+`		Person manPerson = pd.constructPerson(new ManBuilder());`
+
+`		System.out.println(manPerson);`
+
+`	}`
+
+`}`
+
+运行结果：
+
+![](/assets/image15_1.png)
+
+
 
 
 
