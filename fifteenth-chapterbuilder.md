@@ -22,7 +22,7 @@
 
 （2）需要生产的产品的属性相互依赖，这些属性的赋值顺序比较重要时（因为在调用ConcreteBuilder的赋值方法时是有先后顺序的）。
 
-\([http://blog.csdn.net/jason0539/article/details/44992733\](http://blog.csdn.net/jason0539/article/details/44992733\)\)
+\([http://blog.csdn.net/jason0539/article/details/44992733\](http://blog.csdn.net/jason0539/article/details/44992733%29\)
 
 案例:
 
@@ -296,123 +296,137 @@
 
 在《Effective Java》书中第二条，就提到“遇到多个构造器参数时要考虑用构建器”，其实这里的构建器就属于建造者模式，只是里面把四个角色都放到具体产品里面了。
 
+《Effective Java》书中对Builder模式的描述：
+
+当遇到许多构造器参数时，不直接生成想要的对象，而是让客户端利用必要的参数调用构造器\(或者静态工厂\)，得到一个builder对象，然后客户端在builder对象上调用类似于setter的方法，来设置每个相关的可选参数，最后，客户端调用午餐的builder方法来生成不可变的对象。这个builder是它构建的类的静态成员。
+
 案例：
 
 如果上例只需构建男人：
 
 `//Product`
 
-`public class Man {`
+\`public class Man {
 
-`	private String head;`
+\`
 
-`	private String body;`
+`private String head;`
 
-`	private String foot;`
+`private String body;`
 
-`	public String getHead() {`
+`private String foot;`
 
-`		return head;`
+`public String getHead() {`
 
-`	}`
-
-`	public String getBody() {`
-
-`		return body;`
-
-`	}`
-
-`	public String getFoot() {`
-
-`		return foot;`
-
-`	}`
-
-`	public void setHead(String head) {`
-
-`		this.head = head;`
-
-`	}`
-
-`	public void setBody(String body) {`
-
-`		this.body = body;`
-
-`	}`
-
-`	public void setFoot(String foot) {`
-
-`		this.foot = foot;`
-
-`	}`
-
-`	@Override`
-
-`	public String toString() {`
-
-`		return "Man [head=" + head + ", body=" + body + ", foot=" + foot + "]";`
-
-`	}`
+`return head;`
 
 `}`
 
-`//Builder`
+`public String getBody() {`
 
-`public class ManBuilder {`
-
-`	Man man;`
-
-`	public ManBuilder() {`
-
-`		man = new Man();`
-
-`	}`
-
-`	public void buildHead() {`
-
-`		man.setHead("建造男人的头");		`
-
-`	}`
-
-`	public void buildBody() {`
-
-`		man.setBody("建造男人的身体");`
-
-`	}`
-
-`	public void buildFoot() {`
-
-`		man.setFoot("建造男人的脚");`
-
-`	}	`
-
-`	public Man buildMan() {`
-
-`		buildHead();`
-
-`		buildBody();`
-
-`		buildFoot();`
-
-`		return man;		`
-
-`	}	`
+`return body;`
 
 `}`
 
-`//测试类`
+`public String getFoot() {`
 
-`public class Test {`
+`return foot;`
 
-`	public static void main(String[] args) {`
+`}`
 
-`		ManBuilder builder = new ManBuilder();`
+`public void setHead(String head) {`
 
-`		Man man = builder.buildMan();`
+`this.head = head;`
 
-`		System.out.println(man);`
+`}`
 
-`	}`
+`public void setBody(String body) {`
+
+`this.body = body;`
+
+`}`
+
+`public void setFoot(String foot) {`
+
+`this.foot = foot;`
+
+`}`
+
+`@Override`
+
+`public String toString() {`
+
+`return "Man [head=" + head + ", body=" + body + ", foot=" + foot + "]";`
+
+`}`
+
+`}`
+
+`//Builder`
+
+`public class ManBuilder {`
+
+`Man man;`
+
+`public ManBuilder() {`
+
+`man = new Man();`
+
+`}`
+
+`public void buildHead() {`
+
+\`        man.setHead\("建造男人的头"\);
+
+\`
+
+`}`
+
+`public void buildBody() {`
+
+`man.setBody("建造男人的身体");`
+
+`}`
+
+`public void buildFoot() {`
+
+`man.setFoot("建造男人的脚");`
+
+\`    }
+
+\`
+
+`public Man buildMan() {`
+
+`buildHead();`
+
+`buildBody();`
+
+`buildFoot();`
+
+`return man;`
+
+\`    }
+
+\`
+
+`}`
+
+`//测试类`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`ManBuilder builder = new ManBuilder();`
+
+`Man man = builder.buildMan();`
+
+`System.out.println(man);`
+
+`}`
 
 `}`
 
@@ -430,11 +444,9 @@
 
 （2）建造者类逻辑独立，易拓展。
 
-
-
 建造者模式的缺点：
 
 很明显产生了多余的Build对象以及Dirextor对象，消耗了内存。
 
-\(http://blog.csdn.net/seu\_calvin/article/details/52249885\)
+\([http://blog.csdn.net/seu\_calvin/article/details/52249885\](http://blog.csdn.net/seu_calvin/article/details/52249885\)\)
 
