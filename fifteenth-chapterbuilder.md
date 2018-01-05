@@ -22,13 +22,287 @@
 
 （2）需要生产的产品的属性相互依赖，这些属性的赋值顺序比较重要时（因为在调用ConcreteBuilder的赋值方法时是有先后顺序的）。
 
-\(http://blog.csdn.net/jason0539/article/details/44992733\)
+\([http://blog.csdn.net/jason0539/article/details/44992733\](http://blog.csdn.net/jason0539/article/details/44992733\)\)
 
 案例:
 
-`//Product`
+`//Product`
 
-`public class Person {`
+\`public class Person {
+
+\`
+
+`private String head;`
+
+`private String body;`
+
+`private String foot;`
+
+`public String getHead() {`
+
+`return head;`
+
+`}`
+
+`public String getBody() {`
+
+`return body;`
+
+`}`
+
+`public String getFoot() {`
+
+`return foot;`
+
+`}`
+
+`public void setHead(String head) {`
+
+`this.head = head;`
+
+`}`
+
+`public void setBody(String body) {`
+
+`this.body = body;`
+
+`}`
+
+`public void setFoot(String foot) {`
+
+`this.foot = foot;`
+
+`}`
+
+`@Override`
+
+`public String toString() {`
+
+`return "Person [head=" + head + ", body=" + body + ", foot=" + foot + "]";`
+
+`}`
+
+`}`
+
+`//男product`
+
+\`public class Man extends Person{
+
+\`
+
+`public Man() {`
+
+`System.out.println("开始建造男人");`
+
+`}`
+
+`}`
+
+`//女Product`
+
+\`public class Woman extends Person{
+
+\`
+
+`public Woman() {`
+
+`System.out.println("开始建造女人");`
+
+`}`
+
+`}`
+
+`//角色`
+
+\`public interface Builder {
+
+\`
+
+`void buildHead();`
+
+`void buildBody();`
+
+`void buildFoot();`
+
+`Person buildPerson();`
+
+`}`
+
+`//具体角色`
+
+\`public class ManBuilder implements Builder{
+
+\`
+
+\`    Person person;
+
+\`
+
+`public ManBuilder() {`
+
+`person = new Man();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void buildHead() {`
+
+`person.setHead("建造男人的脑袋");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void buildBody() {`
+
+`person.setBody("建造男人的身体");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void buildFoot() {`
+
+`person.setFoot("建造男人的脚");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public Person buildPerson() {`
+
+`return person;`
+
+\`    }
+
+\`
+
+`}`
+
+`//具体角色`
+
+\`public class WomanBuilder implements Builder{
+
+\`
+
+\`    Person person;
+
+\`
+
+`public WomanBuilder() {`
+
+`person = new Woman();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void buildHead() {`
+
+`person.setHead("建造女人的脑袋");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void buildBody() {`
+
+`person.setBody("建造女人的身体");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void buildFoot() {`
+
+`person.setFoot("建造女人的脚");`
+
+`}`
+
+`@Override`
+
+`public Person buildPerson() {`
+
+`return person;`
+
+`}`
+
+`}`
+
+`//角色 director`
+
+\`public class PersonDirector {
+
+\`
+
+`public Person constructPerson(Builder p) {`
+
+`p.buildHead();`
+
+`p.buildBody();`
+
+`p.buildFoot();`
+
+`return p.buildPerson();`
+
+`}`
+
+`}`
+
+`//测试类`
+
+`public class Test {`
+
+`public static void main(String[] args) {`
+
+`PersonDirector pd = new PersonDirector();`
+
+`Person womanPerson = pd.constructPerson(new WomanBuilder());`
+
+`System.out.println(womanPerson);`
+
+`Person manPerson = pd.constructPerson(new ManBuilder());`
+
+`System.out.println(manPerson);`
+
+\`    }
+
+\`
+
+`}`
+
+运行结果：
+
+![](/assets/image15_1.png)
+
+建造者模式在使用过程中可以演化出多种形式：
+
+如果具体的被建造对象只有一个的话，可以省略抽象的Builder和Director，让ConcreteBuilder自己扮演指导者和建造者双重角色，甚至ConcreteBuilder也可以放到Product里面实现。
+
+在《Effective Java》书中第二条，就提到“遇到多个构造器参数时要考虑用构建器”，其实这里的构建器就属于建造者模式，只是里面把四个角色都放到具体产品里面了。
+
+案例：
+
+如果上例只需构建男人：
+
+`//Product`
+
+`public class Man {`
 
 `	private String head;`
 
@@ -76,185 +350,91 @@
 
 `	public String toString() {`
 
-`		return "Person [head=" + head + ", body=" + body + ", foot=" + foot + "]";`
-
-`	}	`
-
-`}`
-
-`//男product`
-
-`public class Man extends Person{`
-
-`	public Man() {`
-
-`		System.out.println("开始建造男人");`
+`		return "Man [head=" + head + ", body=" + body + ", foot=" + foot + "]";`
 
 `	}`
 
-`}`
+`}`
 
-`//女Product`
+`//Builder`
 
-`public class Woman extends Person{`
+`public class ManBuilder {`
 
-`	public Woman() {`
-
-`		System.out.println("开始建造女人");`
-
-`	}`
-
-`}`
-
-`//角色`
-
-`public interface Builder {`
-
-`	void buildHead();`
-
-`	void buildBody();`
-
-`	void buildFoot();`
-
-`	Person buildPerson();`
-
-`}`
-
-`//具体角色`
-
-`public class ManBuilder implements Builder{`
-
-`	Person person;	`
+`	Man man;`
 
 `	public ManBuilder() {`
 
-`		person = new Man();`
+`		man = new Man();`
 
-`	}	`
-
-`	@Override`
+`	}`
 
 `	public void buildHead() {`
 
-`		person.setHead("建造男人的脑袋");`
+`		man.setHead("建造男人的头");		`
 
-`	}`
-
-`	@Override`
+`	}`
 
 `	public void buildBody() {`
 
-`		person.setBody("建造男人的身体");`
+`		man.setBody("建造男人的身体");`
 
-`	}`
-
-`	@Override`
+`	}`
 
 `	public void buildFoot() {`
 
-`		person.setFoot("建造男人的脚");`
+`		man.setFoot("建造男人的脚");`
 
-`	}`
+`	}	`
 
-`	@Override`
+`	public Man buildMan() {`
 
-`	public Person buildPerson() {`
+`		buildHead();`
 
-`		return person;`
+`		buildBody();`
+
+`		buildFoot();`
+
+`		return man;		`
 
 `	}	`
 
 `}`
 
-`//具体角色`
-
-`public class WomanBuilder implements Builder{`
-
-`	Person person;	`
-
-`	public WomanBuilder() {`
-
-`		person = new Woman();`
-
-`	}	`
-
-`	@Override`
-
-`	public void buildHead() {`
-
-`		person.setHead("建造女人的脑袋");`
-
-`	}`
-
-`	@Override`
-
-`	public void buildBody() {`
-
-`		person.setBody("建造女人的身体");`
-
-`	}`
-
-`	@Override`
-
-`	public void buildFoot() {`
-
-`		person.setFoot("建造女人的脚");`
-
-`	}`
-
-`	@Override`
-
-`	public Person buildPerson() {`
-
-`		return person;`
-
-`	}`
-
-`}`
-
-`//角色 director`
-
-`public class PersonDirector {`
-
-`	public Person constructPerson(Builder p) {`
-
-`		p.buildHead();`
-
-`		p.buildBody();`
-
-`		p.buildFoot();`
-
-`		return p.buildPerson();`
-
-`	}`
-
-`}`
-
 `//测试类`
 
-`public class Test {`
+`public class Test {`
 
 `	public static void main(String[] args) {`
 
-`		PersonDirector pd = new PersonDirector();`
+`		ManBuilder builder = new ManBuilder();`
 
-`		Person womanPerson = pd.constructPerson(new WomanBuilder());`
+`		Man man = builder.buildMan();`
 
-`		System.out.println(womanPerson);`
+`		System.out.println(man);`
 
-`		Person manPerson = pd.constructPerson(new ManBuilder());`
+`	}`
 
-`		System.out.println(manPerson);`
-
-`	}`
-
-`}`
+`}`
 
 运行结果：
 
-![](/assets/image15_1.png)
+![](/assets/image15_2.png)
+
+第二个例子更像我们通常构建对象的方式，是构建者模式的精简版。
+
+### **建造者模式优缺点**
+
+建造者模式的优点：
+
+（1）建造模式是将复杂的内部创建封装在内部，对于外部调用的人来说，只需要传入建造者和建造工具，对于内部是如何建造成成品的，调用者无需关心，良好的封装性是建造者模式的优点之一。
+
+（2）建造者类逻辑独立，易拓展。
 
 
 
+建造者模式的缺点：
 
+很明显产生了多余的Build对象以及Dirextor对象，消耗了内存。
+
+\(http://blog.csdn.net/seu\_calvin/article/details/52249885\)
 
