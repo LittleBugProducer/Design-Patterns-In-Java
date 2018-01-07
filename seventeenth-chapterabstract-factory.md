@@ -29,7 +29,7 @@
   负责生产对应的具体子产品，所有具体子产品（cpu、内存、显卡...）组合成一个具体产品（如惠普XXX型号PC）；
 * 产品使用者使用每个具体工厂生产的具体产品；
 
-\([https://www.cnblogs.com/chenpi/p/5156801.html\](https://www.cnblogs.com/chenpi/p/5156801.html\)\)
+\([https://www.cnblogs.com/chenpi/p/5156801.html\](https://www.cnblogs.com/chenpi/p/5156801.html%29\)
 
 案例\([http://blog.csdn.net/jason0539/article/details/44976775\)：](http://blog.csdn.net/jason0539/article/details/44976775%29：)
 
@@ -41,21 +41,19 @@
 
 public interface Engine {
 
-
-
 }
 
 //具体产品
 
 public class EngineA implements Engine{
 
-	public EngineA\(\) {
+```
+public EngineA\(\) {
 
-		System.out.println\("制造--&gt;EngineA"\);
+    System.out.println\("制造--&gt;EngineA"\);
 
-	}
-
-
+}
+```
 
 }
 
@@ -63,13 +61,13 @@ public class EngineA implements Engine{
 
 public class EngineB implements Engine{
 
-	public EngineB\(\) {
+```
+public EngineB\(\) {
 
-		System.out.println\("制造--&gt;EngineB"\);
+    System.out.println\("制造--&gt;EngineB"\);
 
-	}
-
-
+}
+```
 
 }
 
@@ -77,21 +75,19 @@ public class EngineB implements Engine{
 
 public interface AirCondition {
 
-
-
 }
 
 //具体产品
 
 public class AirConditionA implements AirCondition{
 
-	public AirConditionA\(\) {
+```
+public AirConditionA\(\) {
 
-		System.out.println\("制造--&gt;AirConditionA"\);
+    System.out.println\("制造--&gt;AirConditionA"\);
 
-	}
-
-
+}
+```
 
 }
 
@@ -99,13 +95,13 @@ public class AirConditionA implements AirCondition{
 
 public class AirConditionB implements AirCondition{
 
-	public AirConditionB\(\) {
+```
+public AirConditionB\(\) {
 
-		System.out.println\("制造--&gt;AirConditionB"\);
+    System.out.println\("制造--&gt;AirConditionB"\);
 
-	}
-
-
+}
+```
 
 }
 
@@ -113,11 +109,11 @@ public class AirConditionB implements AirCondition{
 
 public interface Factory {
 
+```
+public Engine createEngine\(\);
 
-
-	public Engine createEngine\(\);
-
-	public AirCondition createAircondition\(\);
+public AirCondition createAircondition\(\);
+```
 
 }
 
@@ -125,29 +121,25 @@ public interface Factory {
 
 public class FactoryBMW320 implements Factory{
 
+```
+@Override
+
+public Engine createEngine\(\) {
+
+    return new EngineA\(\);
+
+}
 
 
-	@Override
 
-	public Engine createEngine\(\) {
+@Override
 
-		return new EngineA\(\);
+public AirCondition createAircondition\(\) {
 
-	}
+    return new AirConditionA\(\);
 
-
-
-	@Override
-
-	public AirCondition createAircondition\(\) {
-
-		return new AirConditionA\(\);
-
-	}
-
-	
-
-
+}
+```
 
 }
 
@@ -155,29 +147,25 @@ public class FactoryBMW320 implements Factory{
 
 public class FactoryBMW523 implements Factory{
 
+```
+@Override
+
+public Engine createEngine\(\) {
+
+    return new EngineB\(\);
+
+}
 
 
-	@Override
 
-	public Engine createEngine\(\) {
+@Override
 
-		return new EngineB\(\);
+public AirCondition createAircondition\(\) {
 
-	}
+    return new AirConditionB\(\);
 
-
-
-	@Override
-
-	public AirCondition createAircondition\(\) {
-
-		return new AirConditionB\(\);
-
-	}
-
-	
-
-
+}
+```
 
 }
 
@@ -185,29 +173,35 @@ public class FactoryBMW523 implements Factory{
 
 public class Test {
 
+```
+public static void main\(String\[\] args\) {
+
+    FactoryBMW320 factoryBMW320 = new FactoryBMW320\(\);
+
+    factoryBMW320.createEngine\(\);
+
+    factoryBMW320.createAircondition\(\);
 
 
-	public static void main\(String\[\] args\) {
 
-		FactoryBMW320 factoryBMW320 = new FactoryBMW320\(\);
+    FactoryBMW523 factoryBMW523 = new FactoryBMW523\(\);
 
-		factoryBMW320.createEngine\(\);
+    factoryBMW523.createEngine\(\);
 
-		factoryBMW320.createAircondition\(\);
+    factoryBMW523.createAircondition\(\);
 
-		
-
-		FactoryBMW523 factoryBMW523 = new FactoryBMW523\(\);
-
-		factoryBMW523.createEngine\(\);
-
-		factoryBMW523.createAircondition\(\);
-
-	}
+}
+```
 
 }
 
 运行结果：
 
 ![](/assets/image17_1.png)
+
+总结：
+
+无论是简单工厂模式，工厂方法模式，还是抽象工厂模式，他们都属于工厂模式，在形式和特点上也是极为相似的，他们的最终目的都是为了解耦。在使用时，我们不必去在意这个模式到底工厂方法模式还是抽象工厂模式，因为他们之间的演变常常是令人琢磨不透的。经常你会发现，明明使用的工厂方法模式，当新需求来临，稍加修改，加入了一个新方法后，由于类中的产品构成了不同等级结构中的产品族，它就变成抽象工厂模式了；而对于抽象工厂模式，当减少一个方法使的提供的产品不再构成产品族之后，它就演变成了工厂方法模式。
+
+所以，在使用工厂模式时，只需要关心降低耦合度的目的是否达到了。
 
