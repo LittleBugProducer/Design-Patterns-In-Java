@@ -37,15 +37,15 @@
 
 宝马320系列配置A型号空调和A型号发动机，宝马523系列配置B型号空调和B型号发动机。
 
-//抽象产品
+`//抽象产品`
 
-public interface Engine {
+`public interface Engine {`
 
-}
+`}`
 
-//具体产品
+`//具体产品`
 
-public class EngineA implements Engine{
+`public class EngineA implements Engine{`
 
 ```
 public EngineA\(\) {
@@ -55,11 +55,11 @@ public EngineA\(\) {
 }
 ```
 
-}
+`}`
 
-//具体产品
+`//具体产品`
 
-public class EngineB implements Engine{
+`public class EngineB implements Engine{`
 
 ```
 public EngineB\(\) {
@@ -69,17 +69,17 @@ public EngineB\(\) {
 }
 ```
 
-}
+`}`
 
-//抽象产品
+`//抽象产品`
 
-public interface AirCondition {
+`public interface AirCondition {`
 
-}
+`}`
 
-//具体产品
+`//具体产品`
 
-public class AirConditionA implements AirCondition{
+`public class AirConditionA implements AirCondition{`
 
 ```
 public AirConditionA\(\) {
@@ -89,11 +89,11 @@ public AirConditionA\(\) {
 }
 ```
 
-}
+`}`
 
-//具体产品
+`//具体产品`
 
-public class AirConditionB implements AirCondition{
+`public class AirConditionB implements AirCondition{`
 
 ```
 public AirConditionB\(\) {
@@ -103,11 +103,11 @@ public AirConditionB\(\) {
 }
 ```
 
-}
+`}`
 
-//抽象工厂
+`//抽象工厂`
 
-public interface Factory {
+`public interface Factory {`
 
 ```
 public Engine createEngine\(\);
@@ -115,11 +115,11 @@ public Engine createEngine\(\);
 public AirCondition createAircondition\(\);
 ```
 
-}
+`}`
 
-//具体工厂
+`//具体工厂`
 
-public class FactoryBMW320 implements Factory{
+`public class FactoryBMW320 implements Factory{`
 
 ```
 @Override
@@ -141,11 +141,11 @@ public AirCondition createAircondition\(\) {
 }
 ```
 
-}
+`}`
 
-//具体工厂
+`//具体工厂`
 
-public class FactoryBMW523 implements Factory{
+`public class FactoryBMW523 implements Factory{`
 
 ```
 @Override
@@ -167,11 +167,11 @@ public AirCondition createAircondition\(\) {
 }
 ```
 
-}
+`}`
 
-//测试类
+`//测试类`
 
-public class Test {
+`public class Test {`
 
 ```
 public static void main\(String\[\] args\) {
@@ -182,8 +182,6 @@ public static void main\(String\[\] args\) {
 
     factoryBMW320.createAircondition\(\);
 
-
-
     FactoryBMW523 factoryBMW523 = new FactoryBMW523\(\);
 
     factoryBMW523.createEngine\(\);
@@ -193,7 +191,7 @@ public static void main\(String\[\] args\) {
 }
 ```
 
-}
+`}`
 
 运行结果：
 
