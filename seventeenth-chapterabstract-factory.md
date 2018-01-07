@@ -29,11 +29,185 @@
   负责生产对应的具体子产品，所有具体子产品（cpu、内存、显卡...）组合成一个具体产品（如惠普XXX型号PC）；
 * 产品使用者使用每个具体工厂生产的具体产品；
 
-\(https://www.cnblogs.com/chenpi/p/5156801.html\)
+\([https://www.cnblogs.com/chenpi/p/5156801.html\](https://www.cnblogs.com/chenpi/p/5156801.html\)\)
 
 案例\([http://blog.csdn.net/jason0539/article/details/44976775\)：](http://blog.csdn.net/jason0539/article/details/44976775%29：)
 
 随着客户的要求越来越高，宝马车需要不同配置的空调和发动机等配件。于是这个工厂开始生产空调和发动机，用来组装汽车。这时候工厂有两个系列的产品:空调和发动机。
 
 宝马320系列配置A型号空调和A型号发动机，宝马523系列配置B型号空调和B型号发动机。
+
+//抽象产品
+
+public interface Engine {
+
+
+
+}
+
+//具体产品
+
+public class EngineA implements Engine{
+
+	public EngineA\(\) {
+
+		System.out.println\("制造--&gt;EngineA"\);
+
+	}
+
+
+
+}
+
+//具体产品
+
+public class EngineB implements Engine{
+
+	public EngineB\(\) {
+
+		System.out.println\("制造--&gt;EngineB"\);
+
+	}
+
+
+
+}
+
+//抽象产品
+
+public interface AirCondition {
+
+
+
+}
+
+//具体产品
+
+public class AirConditionA implements AirCondition{
+
+	public AirConditionA\(\) {
+
+		System.out.println\("制造--&gt;AirConditionA"\);
+
+	}
+
+
+
+}
+
+//具体产品
+
+public class AirConditionB implements AirCondition{
+
+	public AirConditionB\(\) {
+
+		System.out.println\("制造--&gt;AirConditionB"\);
+
+	}
+
+
+
+}
+
+//抽象工厂
+
+public interface Factory {
+
+
+
+	public Engine createEngine\(\);
+
+	public AirCondition createAircondition\(\);
+
+}
+
+//具体工厂
+
+public class FactoryBMW320 implements Factory{
+
+
+
+	@Override
+
+	public Engine createEngine\(\) {
+
+		return new EngineA\(\);
+
+	}
+
+
+
+	@Override
+
+	public AirCondition createAircondition\(\) {
+
+		return new AirConditionA\(\);
+
+	}
+
+	
+
+
+
+}
+
+//具体工厂
+
+public class FactoryBMW523 implements Factory{
+
+
+
+	@Override
+
+	public Engine createEngine\(\) {
+
+		return new EngineB\(\);
+
+	}
+
+
+
+	@Override
+
+	public AirCondition createAircondition\(\) {
+
+		return new AirConditionB\(\);
+
+	}
+
+	
+
+
+
+}
+
+//测试类
+
+public class Test {
+
+
+
+	public static void main\(String\[\] args\) {
+
+		FactoryBMW320 factoryBMW320 = new FactoryBMW320\(\);
+
+		factoryBMW320.createEngine\(\);
+
+		factoryBMW320.createAircondition\(\);
+
+		
+
+		FactoryBMW523 factoryBMW523 = new FactoryBMW523\(\);
+
+		factoryBMW523.createEngine\(\);
+
+		factoryBMW523.createAircondition\(\);
+
+	}
+
+}
+
+运行结果：
+
+![](/assets/image17_1.png)
 
