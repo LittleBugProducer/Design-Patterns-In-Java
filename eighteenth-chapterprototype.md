@@ -221,157 +221,165 @@
 
 案例3\(深拷贝\)：
 
-//引用类型
+`//引用类型`
 
-public class Prototype implements Cloneable{
+`public class Prototype implements Cloneable{`
 
-	private String name;
+```
+private String name;
 
-	public Object clone\(\) {
+public Object clone\(\) {
 
-		try {
+    try {
 
-			return super.clone\(\);
+        return super.clone\(\);
 
-		}catch \(CloneNotSupportedException e\) {
+    }catch \(CloneNotSupportedException e\) {
 
-			e.printStackTrace\(\);
+        e.printStackTrace\(\);
 
-			return null;
+        return null;
 
-			// TODO: handle exception
+        // TODO: handle exception
 
-		}
-
-	}
-
-	public String getName\(\) {
-
-		return name;
-
-	}
-
-	public void setName\(String name\) {
-
-		this.name = name;
-
-	}
-
-	
-
-
-
-}//具体原型
-
-public class NewPrototype implements Cloneable{
-
-	private String id;
-
-	
-
-	private Prototype prototype;
-
-	
-
-	public String getId\(\) {
-
-		return id;
-
-	}
-
-
-
-	public Prototype getPrototype\(\) {
-
-		return prototype;
-
-	}
-
-
-
-	public void setId\(String id\) {
-
-		this.id = id;
-
-	}
-
-
-
-	public void setPrototype\(Prototype prototype\) {
-
-		this.prototype = prototype;
-
-	}
-
-
-
-	public Object clone\(\) {
-
-		NewPrototype ret = null;
-
-		try {
-
-			ret = \(NewPrototype\)super.clone\(\);
-
-			ret.prototype = \(Prototype\)this.prototype.clone\(\);
-
-			return ret;
-
-		}catch \(CloneNotSupportedException e\) {
-
-			e.printStackTrace\(\);
-
-			return null;
-
-			// TODO: handle exception
-
-		}
-
-	}
-
-
+    }
 
 }
 
-//测试类
+public String getName\(\) {
 
-public class Test {
-
-
-
-	public static void main\(String\[\] args\) {
-
-		Prototype prototype = new Prototype\(\);
-
-		prototype.setName\("original object"\);
-
-		NewPrototype newob = new NewPrototype\(\);
-
-		newob.setId\("test1"\);
-
-		newob.setPrototype\(prototype\);
-
-		
-
-		NewPrototype copyObj = \(NewPrototype\)newob.clone\(\);
-
-		copyObj.setId\("testCopy"\);
-
-		copyObj.getPrototype\(\).setName\("change object"\);
-
-		System.out.println\("original object id:"+newob.getId\(\)\);
-
-		System.out.println\("original object name:"+newob.getPrototype\(\).getName\(\)\);
-
-		System.out.println\("cloned object id:"+copyObj.getId\(\)\);
-
-		System.out.println\("cloned object name:"+copyObj.getPrototype\(\).getName\(\)\);
-
-	}
+    return name;
 
 }
+
+public void setName\(String name\) {
+
+    this.name = name;
+
+}
+```
+
+`}//具体原型`
+
+`public class NewPrototype implements Cloneable{`
+
+```
+private String id;
+
+
+
+private Prototype prototype;
+
+
+
+public String getId\(\) {
+
+    return id;
+
+}
+
+
+
+public Prototype getPrototype\(\) {
+
+    return prototype;
+
+}
+
+
+
+public void setId\(String id\) {
+
+    this.id = id;
+
+}
+
+
+
+public void setPrototype\(Prototype prototype\) {
+
+    this.prototype = prototype;
+
+}
+
+
+
+public Object clone\(\) {
+
+    NewPrototype ret = null;
+
+    try {
+
+        ret = \(NewPrototype\)super.clone\(\);
+
+        ret.prototype = \(Prototype\)this.prototype.clone\(\);
+
+        return ret;
+
+    }catch \(CloneNotSupportedException e\) {
+
+        e.printStackTrace\(\);
+
+        return null;
+
+        // TODO: handle exception
+
+    }
+
+}
+```
+
+`}`
+
+`//测试类`
+
+`public class Test {`
+
+```
+public static void main\(String\[\] args\) {
+
+    Prototype prototype = new Prototype\(\);
+
+    prototype.setName\("original object"\);
+
+    NewPrototype newob = new NewPrototype\(\);
+
+    newob.setId\("test1"\);
+
+    newob.setPrototype\(prototype\);
+
+
+
+    NewPrototype copyObj = \(NewPrototype\)newob.clone\(\);
+
+    copyObj.setId\("testCopy"\);
+
+    copyObj.getPrototype\(\).setName\("change object"\);
+
+    System.out.println\("original object id:"+newob.getId\(\)\);
+
+    System.out.println\("original object name:"+newob.getPrototype\(\).getName\(\)\);
+
+    System.out.println\("cloned object id:"+copyObj.getId\(\)\);
+
+    System.out.println\("cloned object name:"+copyObj.getPrototype\(\).getName\(\)\);
+
+}
+```
+
+`}`
 
 运行结果：
 
 ![](/assets/image18_3.png)
+
+### 原型模式的优点
+
+　　原型模式允许在运行时动态改变具体的实现类型。原型模式可以在运行期间，由客户来注册符合原型接口的实现类型，也可以动态地改变具体的实现类型，看起来接口没有任何变化，但其实运行的已经是另外一个类实例了。因为克隆一个原型就类似于实例化一个类。
+
+### 原型模式的缺点
+
+　　原型模式最主要的缺点是每一个类都必须配备一个克隆方法。配备克隆方法需要对类的功能进行通盘考虑，这对于全新的类来说不是很难，而对于已经有的类不一定很容易，特别是当一个类引用不支持序列化的间接对象，或者引用含有循环结构的时候。
+
+\(https://www.cnblogs.com/java-my-life/archive/2012/04/11/2439387.html\)
 
