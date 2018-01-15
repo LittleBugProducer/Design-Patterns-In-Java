@@ -18,6 +18,6 @@
 * [Fifteenth Chapter\(Builder\)](fifteenth-chapterbuilder.md)
 * [Sixteenth Chapter\(Factory Method\)](sixteenth-chapter.md)
 * [Seventeenth Chapter\(Abstract Factory\)](seventeenth-chapterabstract-factory.md)
-* Eighteenth Chapter\(Prototype\)
-* Ninteenth Chapter\(Memento\)
+* [Eighteenth Chapter\(Prototype\)](eighteenth-chapterprototype.md)
+* [Ninteenth Chapter\(Memento\)](ninteenth-chaptermemento.md)
 
