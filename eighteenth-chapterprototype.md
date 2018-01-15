@@ -7,25 +7,135 @@
 浅拷贝: 对值类型的成员变量进行值的复制,对引用类型的成员变量只复制引用,不复制引用的对象.  
 深拷贝: 对值类型的成员变量进行值的复制,对引用类型的成员变量也进行引用对象的复制.
 
-\([https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html\](https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html\)\)
+\([https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html\](https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html%29\)
 
 案例1：浅拷贝
 
-`//具体原型`
+`//具体原型`
 
-`public class Prototype implements Cloneable{`
+`public class Prototype implements Cloneable{`
 
-`	private String name;`
+`private String name;`
+
+`public String getName() {`
+
+`return name;`
+
+`}`
+
+`public void setName(String name) {`
+
+`this.name = name;`
+
+`}`
+
+`public Object clone() {`
+
+`try {`
+
+`return super.clone();`
+
+`}catch (CloneNotSupportedException e) {`
+
+`e.printStackTrace();`
+
+`return null;`
+
+`// TODO: handle exception`
+
+`}`
+
+\`    }
+
+\`
+
+`}`
+
+`//测试类`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`Prototype prototype = new Prototype();`
+
+`prototype.setName("original object");`
+
+`Prototype prototype2 = (Prototype)prototype.clone();`
+
+\`        prototype2.setName\("changed object1"\);
+
+\`
+
+`System.out.println("original object:"+prototype.getName());`
+
+\`        System.out.println\("cloned object:"+prototype2.getName\(\)\);
+
+\`
+
+\`    }
+
+\`
+
+`}`
+
+运行结果：
+
+![](/assets/image18_1.png)
+
+案例2：\(浅拷贝\)
+
+`//引用对象`
+
+`public class Prototype {`
+
+`	private String name;`
 
 `	public String getName() {`
 
 `		return name;`
 
-`	}`
+`	}`
 
 `	public void setName(String name) {`
 
 `		this.name = name;`
+
+`	}		`
+
+`}`
+
+`//具体原型`
+
+`public class NewPrototype implements Cloneable{`
+
+`	private String id;`
+
+`	public String getId() {`
+
+`		return id;`
+
+`	}`
+
+`	public void setId(String id) {`
+
+`		this.id = id;`
+
+`	}`
+
+`	private Prototype prototype;`
+
+`	public Prototype getPrototype() {`
+
+`		return prototype;`
+
+`	}`
+
+`	public void setPrototype(Prototype prototype) {`
+
+`		this.prototype = prototype;`
 
 `	}`
 
@@ -51,7 +161,7 @@
 
 `//测试类`
 
-`public class Test {`
+`public class Test {`
 
 `	public static void main(String[] args) {`
 
@@ -59,19 +169,33 @@
 
 `		prototype.setName("original object");`
 
-`		Prototype prototype2 = (Prototype)prototype.clone();`
+`		NewPrototype newobj = new NewPrototype();`
 
-`		prototype2.setName("changed object1");		`
+`		newobj.setId("test1");`
 
-`		System.out.println("original object:"+prototype.getName());`
+`		newobj.setPrototype(prototype);`
 
-`		System.out.println("cloned object:"+prototype2.getName());		`
+`		NewPrototype copyobj = (NewPrototype)newobj.clone();`
 
-`	}	`
+`		copyobj.setId("testCopy");`
+
+`		copyobj.getPrototype().setName("changed object");		`
+
+`		System.out.println("original object id:"+newobj.getId());`
+
+`		System.out.println("original objcet name:"+newobj.getPrototype().getName());`
+
+`		System.out.println("cloned object id:"+copyobj.getId());`
+
+`		System.out.println("cloned object name:"+copyobj.getPrototype().getName());`
+
+`	}`
 
 `}`
 
-运行结果：
+测试结果：
 
-![](/assets/image18_1.png)
+![](/assets/image18_2.png)
+
+
 
