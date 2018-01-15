@@ -87,109 +87,131 @@
 
 案例2：\(浅拷贝\)
 
-`//引用对象`
+`//引用对象`
 
-`public class Prototype {`
+\`public class Prototype {
 
-`	private String name;`
+\`
 
-`	public String getName() {`
+\`    private String name;
 
-`		return name;`
+\`
 
-`	}`
+`public String getName() {`
 
-`	public void setName(String name) {`
+`return name;`
 
-`		this.name = name;`
+\`    }
 
-`	}		`
+\`
 
-`}`
+`public void setName(String name) {`
 
-`//具体原型`
+`this.name = name;`
 
-`public class NewPrototype implements Cloneable{`
+\`    }
 
-`	private String id;`
-
-`	public String getId() {`
-
-`		return id;`
-
-`	}`
-
-`	public void setId(String id) {`
-
-`		this.id = id;`
-
-`	}`
-
-`	private Prototype prototype;`
-
-`	public Prototype getPrototype() {`
-
-`		return prototype;`
-
-`	}`
-
-`	public void setPrototype(Prototype prototype) {`
-
-`		this.prototype = prototype;`
-
-`	}`
-
-`	public Object clone() {`
-
-`		try {`
-
-`			return super.clone();`
-
-`		}catch (CloneNotSupportedException e) {`
-
-`			e.printStackTrace();`
-
-`			return null;`
-
-`			// TODO: handle exception`
-
-`		}`
-
-`	}`
+\`
 
 `}`
 
-`//测试类`
+`//具体原型`
 
-`public class Test {`
+`public class NewPrototype implements Cloneable{`
 
-`	public static void main(String[] args) {`
+\`    private String id;
 
-`		Prototype prototype = new Prototype();`
+\`
 
-`		prototype.setName("original object");`
+`public String getId() {`
 
-`		NewPrototype newobj = new NewPrototype();`
+`return id;`
 
-`		newobj.setId("test1");`
+\`    }
 
-`		newobj.setPrototype(prototype);`
+\`
 
-`		NewPrototype copyobj = (NewPrototype)newobj.clone();`
+`public void setId(String id) {`
 
-`		copyobj.setId("testCopy");`
+`this.id = id;`
 
-`		copyobj.getPrototype().setName("changed object");		`
+`}`
 
-`		System.out.println("original object id:"+newobj.getId());`
+\`    private Prototype prototype;
 
-`		System.out.println("original objcet name:"+newobj.getPrototype().getName());`
+\`
 
-`		System.out.println("cloned object id:"+copyobj.getId());`
+`public Prototype getPrototype() {`
 
-`		System.out.println("cloned object name:"+copyobj.getPrototype().getName());`
+`return prototype;`
 
-`	}`
+\`    }
+
+\`
+
+`public void setPrototype(Prototype prototype) {`
+
+`this.prototype = prototype;`
+
+`}`
+
+`public Object clone() {`
+
+`try {`
+
+`return super.clone();`
+
+`}catch (CloneNotSupportedException e) {`
+
+`e.printStackTrace();`
+
+`return null;`
+
+`// TODO: handle exception`
+
+`}`
+
+\`    }
+
+\`
+
+`}`
+
+`//测试类`
+
+`public class Test {`
+
+`public static void main(String[] args) {`
+
+`Prototype prototype = new Prototype();`
+
+`prototype.setName("original object");`
+
+`NewPrototype newobj = new NewPrototype();`
+
+`newobj.setId("test1");`
+
+`newobj.setPrototype(prototype);`
+
+`NewPrototype copyobj = (NewPrototype)newobj.clone();`
+
+`copyobj.setId("testCopy");`
+
+\`        copyobj.getPrototype\(\).setName\("changed object"\);
+
+\`
+
+`System.out.println("original object id:"+newobj.getId());`
+
+`System.out.println("original objcet name:"+newobj.getPrototype().getName());`
+
+`System.out.println("cloned object id:"+copyobj.getId());`
+
+`System.out.println("cloned object name:"+copyobj.getPrototype().getName());`
+
+\`    }
+
+\`
 
 `}`
 
@@ -197,5 +219,159 @@
 
 ![](/assets/image18_2.png)
 
+案例3\(深拷贝\)：
 
+//引用类型
+
+public class Prototype implements Cloneable{
+
+	private String name;
+
+	public Object clone\(\) {
+
+		try {
+
+			return super.clone\(\);
+
+		}catch \(CloneNotSupportedException e\) {
+
+			e.printStackTrace\(\);
+
+			return null;
+
+			// TODO: handle exception
+
+		}
+
+	}
+
+	public String getName\(\) {
+
+		return name;
+
+	}
+
+	public void setName\(String name\) {
+
+		this.name = name;
+
+	}
+
+	
+
+
+
+}//具体原型
+
+public class NewPrototype implements Cloneable{
+
+	private String id;
+
+	
+
+	private Prototype prototype;
+
+	
+
+	public String getId\(\) {
+
+		return id;
+
+	}
+
+
+
+	public Prototype getPrototype\(\) {
+
+		return prototype;
+
+	}
+
+
+
+	public void setId\(String id\) {
+
+		this.id = id;
+
+	}
+
+
+
+	public void setPrototype\(Prototype prototype\) {
+
+		this.prototype = prototype;
+
+	}
+
+
+
+	public Object clone\(\) {
+
+		NewPrototype ret = null;
+
+		try {
+
+			ret = \(NewPrototype\)super.clone\(\);
+
+			ret.prototype = \(Prototype\)this.prototype.clone\(\);
+
+			return ret;
+
+		}catch \(CloneNotSupportedException e\) {
+
+			e.printStackTrace\(\);
+
+			return null;
+
+			// TODO: handle exception
+
+		}
+
+	}
+
+
+
+}
+
+//测试类
+
+public class Test {
+
+
+
+	public static void main\(String\[\] args\) {
+
+		Prototype prototype = new Prototype\(\);
+
+		prototype.setName\("original object"\);
+
+		NewPrototype newob = new NewPrototype\(\);
+
+		newob.setId\("test1"\);
+
+		newob.setPrototype\(prototype\);
+
+		
+
+		NewPrototype copyObj = \(NewPrototype\)newob.clone\(\);
+
+		copyObj.setId\("testCopy"\);
+
+		copyObj.getPrototype\(\).setName\("change object"\);
+
+		System.out.println\("original object id:"+newob.getId\(\)\);
+
+		System.out.println\("original object name:"+newob.getPrototype\(\).getName\(\)\);
+
+		System.out.println\("cloned object id:"+copyObj.getId\(\)\);
+
+		System.out.println\("cloned object name:"+copyObj.getPrototype\(\).getName\(\)\);
+
+	}
+
+}
+
+运行结果：
+
+![](/assets/image18_3.png)
 
