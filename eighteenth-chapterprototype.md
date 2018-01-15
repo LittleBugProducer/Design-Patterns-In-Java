@@ -7,9 +7,71 @@
 浅拷贝: 对值类型的成员变量进行值的复制,对引用类型的成员变量只复制引用,不复制引用的对象.  
 深拷贝: 对值类型的成员变量进行值的复制,对引用类型的成员变量也进行引用对象的复制.
 
-\(https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html\)
+\([https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html\](https://www.cnblogs.com/itTeacher/archive/2012/12/02/2797857.html\)\)
 
 案例1：浅拷贝
 
+`//具体原型`
 
+`public class Prototype implements Cloneable{`
+
+`	private String name;`
+
+`	public String getName() {`
+
+`		return name;`
+
+`	}`
+
+`	public void setName(String name) {`
+
+`		this.name = name;`
+
+`	}`
+
+`	public Object clone() {`
+
+`		try {`
+
+`			return super.clone();`
+
+`		}catch (CloneNotSupportedException e) {`
+
+`			e.printStackTrace();`
+
+`			return null;`
+
+`			// TODO: handle exception`
+
+`		}`
+
+`	}`
+
+`}`
+
+`//测试类`
+
+`public class Test {`
+
+`	public static void main(String[] args) {`
+
+`		Prototype prototype = new Prototype();`
+
+`		prototype.setName("original object");`
+
+`		Prototype prototype2 = (Prototype)prototype.clone();`
+
+`		prototype2.setName("changed object1");		`
+
+`		System.out.println("original object:"+prototype.getName());`
+
+`		System.out.println("cloned object:"+prototype2.getName());		`
+
+`	}	`
+
+`}`
+
+运行结果：
+
+![](/assets/image18_1.png)
 
