@@ -6,7 +6,7 @@
 
 ### 角色
 
-\([https://www.cnblogs.com/chenssy/p/3341526.html\](https://www.cnblogs.com/chenssy/p/3341526.html\)\)
+\([https://www.cnblogs.com/chenssy/p/3341526.html\](https://www.cnblogs.com/chenssy/p/3341526.html%29\)
 
 Originator: 原发器。负责创建一个备忘录，用以记录当前对象的内部状态，通过也可以使用它来利用备忘录恢复内部状态。同时原发器还可以根据需要决定Memento存储Originator的那些内部状态。
 
@@ -27,6 +27,8 @@ Caretaker: 负责人。负责保存好备忘录，不能对备忘录的内容进
 所以就备忘录模式而言理想的情况就是只允许生成该备忘录的那个原发器访问备忘录的内部状态。
 
 案例：
+
+\(http://blog.csdn.net/zhengzhb/article/details/7697549\)
 
 `//备忘录`
 
@@ -167,4 +169,8 @@ Caretaker: 负责人。负责保存好备忘录，不能对备忘录的内容进
 运行结果：
 
 ![](/assets/image19_1.png)
+
+案例2--&gt;多状态多备份：
+
+
 
