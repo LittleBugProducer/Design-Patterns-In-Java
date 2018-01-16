@@ -2,11 +2,11 @@
 
 ### 定义
 
- 在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样就可以将该对象恢复到原先保存的状态
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样就可以将该对象恢复到原先保存的状态
 
 ### 角色
 
-\(https://www.cnblogs.com/chenssy/p/3341526.html\)
+\([https://www.cnblogs.com/chenssy/p/3341526.html\](https://www.cnblogs.com/chenssy/p/3341526.html\)\)
 
 Originator: 原发器。负责创建一个备忘录，用以记录当前对象的内部状态，通过也可以使用它来利用备忘录恢复内部状态。同时原发器还可以根据需要决定Memento存储Originator的那些内部状态。
 
@@ -28,113 +28,143 @@ Caretaker: 负责人。负责保存好备忘录，不能对备忘录的内容进
 
 案例：
 
-`//备忘录`
+`//备忘录`
 
-`public class Memento {`
+\`public class Memento {
 
-`	private String state = "";`
+\`
 
-`	public String getState() {`
+`private String state = "";`
 
-`		return state;`
+`public String getState() {`
 
-`	}`
+`return state;`
 
-`	public void setState(String state) {`
+\`    }
 
-`		this.state = state;`
+\`
 
-`	}`
+`public void setState(String state) {`
 
-`	public Memento(String state) {`
+`this.state = state;`
 
-`		this.state = state;`
+\`    }
 
-`	}	`
+\`
 
-`}`
+`public Memento(String state) {`
 
-`//原发器`
+`this.state = state;`
 
-`public class Originator {`
+\`    }
 
-`	private String state="";`
-
-`	public String getState() {`
-
-`		return state;`
-
-`	}`
-
-`	public void setState(String state) {`
-
-`		this.state = state;`
-
-`	}`
-
-`	public Memento createMemento() {`
-
-`		return new Memento(this.state);`
-
-`	}	`
-
-`	public void restoreMemento(Memento memento) {`
-
-`		this.setState(memento.getState());`
-
-`	}	`
-
-`}`
-
-`//负责人`
-
-`public class Caretaker {`
-
-`	private Memento memento;`
-
-`	public Memento getMemento() {`
-
-`		return memento;`
-
-`	}`
-
-`	public void setMemento(Memento memento) {`
-
-`		this.memento = memento;`
-
-`	}	`
+\`
 
 `}`
 
-`//测试类`
+`//原发器`
 
-`public class Test {`
+\`public class Originator {
 
-`	public static void main(String[] args) {`
+\`
 
-`		Originator originator = new Originator();`
+\`    private String state="";
 
-`		originator.setState("状态1");`
+\`
 
-`		System.out.println("初试状态:"+originator.getState());`
+`public String getState() {`
 
-`		Caretaker caretaker = new Caretaker();`
+`return state;`
 
-`		caretaker.setMemento(originator.createMemento());`
+\`    }
 
-`		originator.setState("状态2");`
+\`
 
-`		System.out.println("改变后状态:"+originator.getState());`
+`public void setState(String state) {`
 
-`		originator.restoreMemento(caretaker.getMemento());`
+`this.state = state;`
 
-`		System.out.println("恢复后状态："+originator.getState());`
+\`    }
 
-`	}`
+\`
 
-`}`
+`public Memento createMemento() {`
 
-运行结果：![](/assets/image19_1.png)
+`return new Memento(this.state);`
 
+\`    }
 
+\`
+
+`public void restoreMemento(Memento memento) {`
+
+`this.setState(memento.getState());`
+
+\`    }
+
+\`
+
+`}`
+
+`//负责人`
+
+\`public class Caretaker {
+
+\`
+
+\`    private Memento memento;
+
+\`
+
+`public Memento getMemento() {`
+
+`return memento;`
+
+\`    }
+
+\`
+
+`public void setMemento(Memento memento) {`
+
+`this.memento = memento;`
+
+\`    }
+
+\`
+
+`}`
+
+`//测试类`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`Originator originator = new Originator();`
+
+`originator.setState("状态1");`
+
+`System.out.println("初试状态:"+originator.getState());`
+
+`Caretaker caretaker = new Caretaker();`
+
+`caretaker.setMemento(originator.createMemento());`
+
+`originator.setState("状态2");`
+
+`System.out.println("改变后状态:"+originator.getState());`
+
+`originator.restoreMemento(caretaker.getMemento());`
+
+`System.out.println("恢复后状态："+originator.getState());`
+
+`}`
+
+`}`
+
+运行结果：
+
+![](/assets/image19_1.png)
 
