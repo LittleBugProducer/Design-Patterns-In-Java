@@ -28,7 +28,7 @@ Caretaker: 负责人。负责保存好备忘录，不能对备忘录的内容进
 
 案例：
 
-\([http://blog.csdn.net/zhengzhb/article/details/7697549\](http://blog.csdn.net/zhengzhb/article/details/7697549\)\)
+\([http://blog.csdn.net/zhengzhb/article/details/7697549\](http://blog.csdn.net/zhengzhb/article/details/7697549%29\)
 
 `//备忘录`
 
@@ -172,229 +172,259 @@ Caretaker: 负责人。负责保存好备忘录，不能对备忘录的内容进
 
 案例2--&gt;多状态多备份：
 
-`public class Memento {`
+\`public class Memento {
 
-`	private Map<String, Object>stateMap;`
+\`
 
-`	public Memento(Map<String, Object>map) {`
+`private Map<String, Object>stateMap;`
 
-`		this.stateMap = map;`
+`public Memento(Map<String, Object>map) {`
 
-`	}`
+`this.stateMap = map;`
 
-`	public Map<String, Object> getStateMap() {`
+`}`
 
-`		return stateMap;`
+`public Map<String, Object> getStateMap() {`
 
-`	}`
+`return stateMap;`
 
-`	public void setStateMap(Map<String, Object> stateMap) {`
+`}`
 
-`		this.stateMap = stateMap;`
+`public void setStateMap(Map<String, Object> stateMap) {`
 
-`	}	`
+`this.stateMap = stateMap;`
 
-`}`
+\`    }
 
-`public class BeanUtils {`
+\`
 
-`	public static Map<String, Object>backupPro(Object bean){`
+`}`
 
-`		Map<String, Object>result = new HashMap<String,Object>();`
+\`public class BeanUtils {
 
-`		try {`
+\`
 
-`			BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());`
+`public static Map<String, Object>backupPro(Object bean){`
 
-`			PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();`
+`Map<String, Object>result = new HashMap<String,Object>();`
 
-`			for(PropertyDescriptor des:descriptors) {`
+`try {`
 
-`				String fieldName=des.getName();`
+`BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());`
 
-`				Method getter = des.getReadMethod();`
+`PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();`
 
-`				Object fieldValue=getter.invoke(bean, new Object[] {});`
+`for(PropertyDescriptor des:descriptors) {`
 
-`				if(!fieldName.equalsIgnoreCase("class")) {`
+`String fieldName=des.getName();`
 
-`					result.put(fieldName, fieldValue);`
+`Method getter = des.getReadMethod();`
 
-`				}`
+`Object fieldValue=getter.invoke(bean, new Object[] {});`
 
-`			}`
+`if(!fieldName.equalsIgnoreCase("class")) {`
 
-`		}catch (Exception e) {`
+`result.put(fieldName, fieldValue);`
 
-`			// TODO: handle exception`
+`}`
 
-`			e.printStackTrace();`
+`}`
 
-`		}`
+`}catch (Exception e) {`
 
-`		return result;`
+`// TODO: handle exception`
 
-`	}`
+`e.printStackTrace();`
 
-`	public static void restoreProp(Object bean,Map<String, Object>propMap) {`
+`}`
 
-`		try {`
+`return result;`
 
-`			BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());`
+`}`
 
-`			PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();`
+`public static void restoreProp(Object bean,Map<String, Object>propMap) {`
 
-`			for(PropertyDescriptor des:descriptors) {`
+`try {`
 
-`				String fieldName=des.getName();`
+`BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());`
 
-`				if(propMap.containsKey(fieldName)) {`
+`PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();`
 
-`					Method setter = des.getWriteMethod();`
+`for(PropertyDescriptor des:descriptors) {`
 
-`					setter.invoke(bean, new Object[] {propMap.get(fieldName)});`
+`String fieldName=des.getName();`
 
-`				}`
+`if(propMap.containsKey(fieldName)) {`
 
-`			}`
+`Method setter = des.getWriteMethod();`
 
-`		}catch (Exception e) {`
+`setter.invoke(bean, new Object[] {propMap.get(fieldName)});`
 
-`			// TODO: handle exception`
+`}`
 
-`			e.printStackTrace();`
+`}`
 
-`		}`
+`}catch (Exception e) {`
 
-`	}`
+`// TODO: handle exception`
 
-`}`
+`e.printStackTrace();`
 
-`public class Originator {`
+`}`
 
-`	private String state1="";`
+`}`
 
-`	private String state2="";`
+`}`
 
-`	private String state3="";`
+\`public class Originator {
 
-`	public String getState1() {`
+\`
 
-`		return state1;`
+`private String state1="";`
 
-`	}`
+`private String state2="";`
 
-`	public String getState2() {`
+`private String state3="";`
 
-`		return state2;`
+`public String getState1() {`
 
-`	}`
+`return state1;`
 
-`	public String getState3() {`
+`}`
 
-`		return state3;`
+`public String getState2() {`
 
-`	}`
+`return state2;`
 
-`	public void setState1(String state1) {`
+`}`
 
-`		this.state1 = state1;`
+`public String getState3() {`
 
-`	}`
+`return state3;`
 
-`	public void setState2(String state2) {`
+`}`
 
-`		this.state2 = state2;`
+`public void setState1(String state1) {`
 
-`	}`
+`this.state1 = state1;`
 
-`	public void setState3(String state3) {`
+`}`
 
-`		this.state3 = state3;`
+`public void setState2(String state2) {`
 
-`	}`
+`this.state2 = state2;`
 
-`	`
+`}`
 
-`	public Memento createMemento() {`
+`public void setState3(String state3) {`
 
-`		return new Memento(BeanUtils.backupPro(this));`
+`this.state3 = state3;`
 
-`	}`
+`}`
 
-`	public void restoreMemento(Memento memento) {`
+`  
+`
 
-`		BeanUtils.restoreProp(this, memento.getStateMap());`
+`public Memento createMemento() {`
 
-`	}`
+`return new Memento(BeanUtils.backupPro(this));`
 
-`	@Override`
+`}`
 
-`	public String toString() {`
+`public void restoreMemento(Memento memento) {`
 
-`		return "Originator [state1=" + state1 + ", state2=" + state2 + ", state3=" + state3 + "]";`
+`BeanUtils.restoreProp(this, memento.getStateMap());`
 
-`	}	`
+`}`
 
-`}`
+`@Override`
 
-`public class Caretaker {`
+`public String toString() {`
 
-``
+`return "Originator [state1=" + state1 + ", state2=" + state2 + ", state3=" + state3 + "]";`
 
-`	private Map<String, Memento>meMap = new HashMap<String,Memento>();`
+\`    }
 
-`	public Memento getMemento(String index) {`
+\`
 
-`		return meMap.get(index);`
+`}`
 
-`	}`
+`public class Caretaker {`
 
-`	public void setMemento(String index,Memento memento) {`
+`  
+`
 
-`		this.meMap.put(index, memento);`
+`private Map<String, Memento>meMap = new HashMap<String,Memento>();`
 
-`	}`
+`public Memento getMemento(String index) {`
 
-`}`
+`return meMap.get(index);`
 
-`public class Test {`
+`}`
 
-`	public static void main(String[] args) {`
+`public void setMemento(String index,Memento memento) {`
 
-`		Originator originator = new Originator();`
+`this.meMap.put(index, memento);`
 
-`		Caretaker caretaker = new Caretaker();`
+`}`
 
-`		originator.setState1("我是");`
+`}`
 
-`		originator.setState2("一个");`
+\`public class Test {
 
-`		originator.setState3("单身汪");`
+\`
 
-`		System.out.println("初始状态:"+originator);`
+`public static void main(String[] args) {`
 
-`		caretaker.setMemento("001", originator.createMemento());`
+`Originator originator = new Originator();`
 
-`		originator.setState1("现在");`
+`Caretaker caretaker = new Caretaker();`
 
-`		originator.setState2("我是");`
+`originator.setState1("我是");`
 
-`		originator.setState3("汪汪");`
+`originator.setState2("一个");`
 
-`		System.out.println("修改后状态:"+originator);`
+`originator.setState3("单身汪");`
 
-`		originator.restoreMemento(caretaker.getMemento("001"));`
+`System.out.println("初始状态:"+originator);`
 
-`		System.out.println("恢复后状态:"+originator);		`
+`caretaker.setMemento("001", originator.createMemento());`
 
-`	}`
+`originator.setState1("现在");`
 
-`}`
+`originator.setState2("我是");`
+
+`originator.setState3("汪汪");`
+
+`System.out.println("修改后状态:"+originator);`
+
+`originator.restoreMemento(caretaker.getMemento("001"));`
+
+\`        System.out.println\("恢复后状态:"+originator\);
+
+\`
+
+`}`
+
+`}`
 
 运行结果:
 
 ![](/assets/image19_2.png)
+
+### 优点：
+
+ 1、 给用户提供了一种可以恢复状态的机制。可以是用户能够比较方便地回到某个历史的状态。
+
+ 2、 实现了信息的封装。使得用户不需要关心状态的保存细节。
+
+### 缺点：
+
+消耗资源。如果类的成员变量过多，势必会占用比较大的资源，而且每一次保存都会消耗一定的内存。
+
+
+
+
 
 
 
