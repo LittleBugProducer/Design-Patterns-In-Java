@@ -23,8 +23,6 @@ private int operations=0;
 
 protected int length=0;
 
-
-
 protected int doSort\(\) {
 
     operations=0;
@@ -55,11 +53,7 @@ protected int doSort\(\) {
 
 }
 
-
-
 protected abstract void swap\(int index\);
-
-
 
 public abstract boolean outOfOrder\(int index\) ;
 ```
@@ -73,8 +67,6 @@ public abstract boolean outOfOrder\(int index\) ;
 ```
 private int\[\] array=null;
 
-
-
 public int Sort\(int\[\] theArray\) {
 
     array = theArray;
@@ -85,24 +77,16 @@ public int Sort\(int\[\] theArray\) {
 
 }
 
-
-
 public int\[\] getArray\(\) {
 
     return array;
 
 }
-
-
-
 public void setArray\(int\[\] array\) {
 
     this.array = array;
 
 }
-
-
-
 @Override
 
 protected void swap\(int index\) {
@@ -114,8 +98,6 @@ protected void swap\(int index\) {
     array\[index+1\]=temp;
 
 }
-
-
 
 @Override
 
@@ -134,29 +116,15 @@ public boolean outOfOrder\(int index\) {
 
 ```
 private float\[\] array=null;
-
-
-
-
-
-
-
 public float\[\] getArray\(\) {
 
     return array;
-
 }
-
-
-
 public void setArray\(float\[\] array\) {
 
     this.array = array;
 
 }
-
-
-
 public int sort\(float\[\] theArray\) {
 
     array = theArray;
@@ -166,9 +134,6 @@ public int sort\(float\[\] theArray\) {
     return doSort\(\);
 
 }
-
-
-
 @Override
 
 protected void swap\(int index\) {
@@ -180,9 +145,6 @@ protected void swap\(int index\) {
     array\[index+1\]=temp;
 
 }
-
-
-
 @Override
 
 public boolean outOfOrder\(int index\) {
@@ -190,9 +152,8 @@ public boolean outOfOrder\(int index\) {
     return \(array\[index\]&gt;array\[index+1\]\);
 
 }
+}
 ```
-
-`}`
 
 `public class Test {`
 
