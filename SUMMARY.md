@@ -20,4 +20,5 @@
 * [Seventeenth Chapter\(Abstract Factory\)](seventeenth-chapterabstract-factory.md)
 * [Eighteenth Chapter\(Prototype\)](eighteenth-chapterprototype.md)
 * [Ninteenth Chapter\(Memento\)](ninteenth-chaptermemento.md)
+* [Twentyth Chapter](twentyth-chapter.md)
 
