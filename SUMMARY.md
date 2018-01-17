@@ -20,5 +20,10 @@
 * [Seventeenth Chapter\(Abstract Factory\)](seventeenth-chapterabstract-factory.md)
 * [Eighteenth Chapter\(Prototype\)](eighteenth-chapterprototype.md)
 * [Ninteenth Chapter\(Memento\)](ninteenth-chaptermemento.md)
-* [Twentyth Chapter](twentyth-chapter.md)
+* [Twentieth Chapter](twentyth-chapter.md)
+* [Twenty-first Chapter\(Template\)](twenty-first-chaptertemplate.md)
+* [Twenty-second Chapter\(State\)](twenty-second-chapter.md)
+* [Thenty-third Chapter\(Strategy\)](thenty-third-chapter.md)
+* [Twenty-fourth Chapter\(Command\)](twenty-fourth-chaptercommand.md)
+* [Twenty-fifth Chapter\(Interpreter\)](twenty-fifth-chapter.md)
 
