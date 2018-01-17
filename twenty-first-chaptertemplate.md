@@ -14,227 +14,225 @@
 
 案例\(冒泡排序\)：
 
-//抽象类
+`//抽象类`
 
-public abstract class BubbleSorter {
+`public abstract class BubbleSorter {`
+
+```
+private int operations=0;
+
+protected int length=0;
 
 
 
-	private int operations=0;
+protected int doSort\(\) {
 
-	protected int length=0;
+    operations=0;
 
-	
+    if\(length&lt;=1\) {
 
-	protected int doSort\(\) {
+        return operations;
 
-		operations=0;
+    }
 
-		if\(length&lt;=1\) {
+    for\(int nextToLast=length-1;nextToLast&gt;=0;nextToLast--\) {
 
-			return operations;
+        for\(int index=0;index&lt;nextToLast;index++\) {
 
-		}
+            if\(outOfOrder\(index\)\) {
 
-		for\(int nextToLast=length-1;nextToLast&gt;=0;nextToLast--\) {
+                swap\(index\);
 
-			for\(int index=0;index&lt;nextToLast;index++\) {
+            }
 
-				if\(outOfOrder\(index\)\) {
+            operations++;
 
-					swap\(index\);
+        }
 
-				}
+    }
 
-				operations++;
-
-			}
-
-		}
-
-		return operations;
-
-	}
-
-	
-
-	protected abstract void swap\(int index\);
-
-	
-
-	public abstract boolean outOfOrder\(int index\) ;
+    return operations;
 
 }
 
-//具体类
 
-public class IntBubbleSorter extends BubbleSorter{
 
-	private int\[\] array=null;
-
-	
-
-	public int Sort\(int\[\] theArray\) {
-
-		array = theArray;
-
-		length = array.length;
-
-		return doSort\(\);
-
-	}
+protected abstract void swap\(int index\);
 
 
 
-	public int\[\] getArray\(\) {
+public abstract boolean outOfOrder\(int index\) ;
+```
 
-		return array;
+`}`
 
-	}
+`//具体类`
 
+`public class IntBubbleSorter extends BubbleSorter{`
 
-
-	public void setArray\(int\[\] array\) {
-
-		this.array = array;
-
-	}
+```
+private int\[\] array=null;
 
 
 
-	@Override
+public int Sort\(int\[\] theArray\) {
 
-	protected void swap\(int index\) {
+    array = theArray;
 
-		int temp = array\[index\];
+    length = array.length;
 
-		array\[index\] = array\[index+1\];
-
-		array\[index+1\]=temp;
-
-	}
-
-
-
-	@Override
-
-	public boolean outOfOrder\(int index\) {
-
-		return \(array\[index\]&gt;array\[index+1\]\);
-
-	}
-
-	
-
-
+    return doSort\(\);
 
 }
 
-//具体类
-
-public class FloatBubbleSorter extends BubbleSorter{
 
 
+public int\[\] getArray\(\) {
 
-	private float\[\] array=null;
-
-	
-
-	
-
-	
-
-	public float\[\] getArray\(\) {
-
-		return array;
-
-	}
-
-
-
-	public void setArray\(float\[\] array\) {
-
-		this.array = array;
-
-	}
-
-
-
-	public int sort\(float\[\] theArray\) {
-
-		array = theArray;
-
-		length = array.length;
-
-		return doSort\(\);
-
-	}
-
-	
-
-	@Override
-
-	protected void swap\(int index\) {
-
-		float temp = array\[index\];
-
-		array\[index\]=array\[index+1\];
-
-		array\[index+1\]=temp;
-
-	}
-
-
-
-	@Override
-
-	public boolean outOfOrder\(int index\) {
-
-		return \(array\[index\]&gt;array\[index+1\]\);
-
-	}
-
-	
-
-
+    return array;
 
 }
 
-public class Test {
 
 
+public void setArray\(int\[\] array\) {
 
-	public static void main\(String\[\] args\) {
-
-		int\[\] intArray=new int\[\] {5,3,12,8,10};
-
-		IntBubbleSorter sorter = new IntBubbleSorter\(\);
-
-		sorter.Sort\(intArray\);
-
-		for \(int i : intArray\) {
-
-			System.out.print\(i+" "\);
-
-		}
-
-		System.out.println\(\);
-
-		float\[\] floatArray = new float\[\] {5.0f,3.0f,12.0f,8.0f,10.0f};
-
-		FloatBubbleSorter sorter2 = new FloatBubbleSorter\(\);
-
-		sorter2.sort\(floatArray\);
-
-		for \(float f : floatArray\) {
-
-			System.out.print\(f+" "\);
-
-		}
-
-		System.out.println\(\);
-
-	}
+    this.array = array;
 
 }
+
+
+
+@Override
+
+protected void swap\(int index\) {
+
+    int temp = array\[index\];
+
+    array\[index\] = array\[index+1\];
+
+    array\[index+1\]=temp;
+
+}
+
+
+
+@Override
+
+public boolean outOfOrder\(int index\) {
+
+    return \(array\[index\]&gt;array\[index+1\]\);
+
+}
+```
+
+`}`
+
+`//具体类`
+
+`public class FloatBubbleSorter extends BubbleSorter{`
+
+```
+private float\[\] array=null;
+
+
+
+
+
+
+
+public float\[\] getArray\(\) {
+
+    return array;
+
+}
+
+
+
+public void setArray\(float\[\] array\) {
+
+    this.array = array;
+
+}
+
+
+
+public int sort\(float\[\] theArray\) {
+
+    array = theArray;
+
+    length = array.length;
+
+    return doSort\(\);
+
+}
+
+
+
+@Override
+
+protected void swap\(int index\) {
+
+    float temp = array\[index\];
+
+    array\[index\]=array\[index+1\];
+
+    array\[index+1\]=temp;
+
+}
+
+
+
+@Override
+
+public boolean outOfOrder\(int index\) {
+
+    return \(array\[index\]&gt;array\[index+1\]\);
+
+}
+```
+
+`}`
+
+`public class Test {`
+
+```
+public static void main\(String\[\] args\) {
+
+    int\[\] intArray=new int\[\] {5,3,12,8,10};
+
+    IntBubbleSorter sorter = new IntBubbleSorter\(\);
+
+    sorter.Sort\(intArray\);
+
+    for \(int i : intArray\) {
+
+        System.out.print\(i+" "\);
+
+    }
+
+    System.out.println\(\);
+
+    float\[\] floatArray = new float\[\] {5.0f,3.0f,12.0f,8.0f,10.0f};
+
+    FloatBubbleSorter sorter2 = new FloatBubbleSorter\(\);
+
+    sorter2.sort\(floatArray\);
+
+    for \(float f : floatArray\) {
+
+        System.out.print\(f+" "\);
+
+    }
+
+    System.out.println\(\);
+
+}
+```
+
+`}`
+
+运行结果：
+
+![](/assets/image21_1.png)
 
