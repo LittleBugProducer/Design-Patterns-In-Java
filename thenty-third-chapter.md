@@ -10,7 +10,103 @@
 
 案例：
 
-出行旅游交通方式选择\(http://blog.csdn.net/hguisu/article/details/7558249/\)
+出行旅游交通方式选择\([http://blog.csdn.net/hguisu/article/details/7558249/\](http://blog.csdn.net/hguisu/article/details/7558249/\)\)
+
+`public interface TravelStrategy {`
+
+`	void travelAlgorithm();`
+
+`}`
+
+`public class AirplaneStrategy implements TravelStrategy{`
+
+`	@Override`
+
+`	public void travelAlgorithm() {`
+
+`		System.out.println("travel by air");`
+
+`	}	`
+
+`}`
+
+`public class TrainStrategy implements TravelStrategy{`
+
+`	@Override`
+
+`	public void travelAlgorithm() {`
+
+`		System.out.println("travel by train");`
+
+`	}	`
+
+`}`
+
+`public class BicycleStrategy implements TravelStrategy{`
+
+`	@Override`
+
+`	public void travelAlgorithm() {`
+
+`		System.out.println("travel by bike");`
+
+`	}	`
+
+`}`
+
+`public class Context {`
+
+`	private TravelStrategy travelStrategy = null;`
+
+`	public Context(TravelStrategy travelStrategy) {`
+
+`		this.travelStrategy = travelStrategy;		`
+
+`	}`
+
+`	public TravelStrategy getTravelStrategy() {`
+
+`		return travelStrategy;`
+
+`	}`
+
+`	public void setTravelStrategy(TravelStrategy travelStrategy) {`
+
+`		this.travelStrategy = travelStrategy;`
+
+`	}	`
+
+`	public void travel() {`
+
+`		travelStrategy.travelAlgorithm();`
+
+`	}`
+
+`}`
+
+`public class Test {`
+
+`	public static void main(String[] args) {`
+
+`		Context context = new Context(new AirplaneStrategy());`
+
+`		context.travel();		`
+
+`		context.setTravelStrategy(new TrainStrategy());`
+
+`		context.travel();		`
+
+`		context.setTravelStrategy(new BicycleStrategy());`
+
+`		context.travel();`
+
+`	}`
+
+`}`
+
+运行结果：
+
+![](/assets/image23_1.png)
 
 
 
