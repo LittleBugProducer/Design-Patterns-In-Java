@@ -92,201 +92,480 @@ demo1:四个状态的执行都有前置条件:
 
 ![](/assets/image22_2.png)
 
-`public interface ILift {`
+\`public interface ILift {
 
-`	final static int OPENING_STATE=1;`
+\`
 
-`	final static int CLOSING_STATE=2;`
+`final static int OPENING_STATE=1;`
 
-`	final static int RUNNING_STATE=3;`
+`final static int CLOSING_STATE=2;`
 
-`	final static int STOPPING_STATE=4;`
+`final static int RUNNING_STATE=3;`
 
-`	void setState(int state);`
+`final static int STOPPING_STATE=4;`
 
-`	void open();`
+`void setState(int state);`
 
-`	void close();`
+`void open();`
 
-`	void run();`
+`void close();`
 
-`	void stop();`
+`void run();`
 
-`}`
+`void stop();`
 
-`public class Lift implements ILift{	`
+`}`
 
-`	private int state;`
+\`public class Lift implements ILift{
 
-`	public void setState(int state) {`
+\`
 
-`		this.state=state;`
+\`    private int state;
 
-`	}	`
+\`
 
-`	private void closeWithoutLogic() {`
+`public void setState(int state) {`
 
-`		System.out.println("电梯门关闭");`
+`this.state=state;`
 
-`	}	`
+\`    }
 
-`	private void openWithoutLogic() {`
+\`
 
-`		System.out.println("电梯门开启");`
+`private void closeWithoutLogic() {`
 
-`	}	`
+`System.out.println("电梯门关闭");`
 
-`	private void runWithoutLogic() {`
+\`    }
 
-`		System.out.println("电梯上下跑起来");`
+\`
+
+`private void openWithoutLogic() {`
+
+`System.out.println("电梯门开启");`
+
+\`    }
+
+\`
+
+`private void runWithoutLogic() {`
+
+`System.out.println("电梯上下跑起来");`
+
+`}`
+
+`private void stopWithoutLogic() {`
+
+`System.out.println("电梯停止了");`
+
+\`    }
+
+\`
+
+`public void open() {`
+
+`switch (this.state) {`
+
+`case OPENING_STATE:`
+
+`break;`
+
+`case CLOSING_STATE:`
+
+`this.openWithoutLogic();`
+
+`this.setState(OPENING_STATE);`
+
+`break;`
+
+`case RUNNING_STATE:`
+
+`break;`
+
+`case STOPPING_STATE:`
+
+`this.openWithoutLogic();`
+
+`this.setState(OPENING_STATE);`
+
+`break;`
+
+`default:`
+
+`break;`
+
+`}`
+
+\`    }
+
+\`
+
+`public void close() {`
+
+`switch (this.state) {`
+
+`case OPENING_STATE:`
+
+`this.closeWithoutLogic();`
+
+`this.setState(CLOSING_STATE);`
+
+`break;`
+
+`case CLOSING_STATE:`
+
+`break;`
+
+`case RUNNING_STATE:`
+
+`break;`
+
+`case STOPPING_STATE:`
+
+`break;`
+
+`default:`
+
+`break;`
+
+`}`
+
+\`    }
+
+\`
+
+`public void run() {`
+
+`switch (this.state) {`
+
+\`        case OPENING\_STATE:
+
+\`
+
+`break;`
+
+`case CLOSING_STATE:`
+
+`this.runWithoutLogic();`
+
+`this.setState(RUNNING_STATE);`
+
+`break;`
+
+`case RUNNING_STATE:`
+
+`break;`
+
+`case STOPPING_STATE:`
+
+`this.runWithoutLogic();`
+
+`this.setState(RUNNING_STATE);`
+
+`break;`
+
+`default:`
+
+`break;`
+
+`}`
+
+\`    }
+
+\`
+
+`public void stop() {`
+
+`switch (this.state) {`
+
+\`        case OPENING\_STATE:
+
+\`
+
+`break;`
+
+`case CLOSING_STATE:`
+
+`this.stopWithoutLogic();`
+
+`this.setState(CLOSING_STATE);`
+
+`break;`
+
+`case RUNNING_STATE:`
+
+`this.stopWithoutLogic();`
+
+`this.setState(CLOSING_STATE);`
+
+`break;`
+
+`case STOPPING_STATE:`
+
+`break;`
+
+`default:`
+
+`break;`
+
+`}`
+
+`}`
+
+`}`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`ILift lift = new Lift();`
+
+`lift.setState(ILift.STOPPING_STATE);`
+
+`lift.open();`
+
+`lift.close();`
+
+`lift.run();`
+
+`lift.stop();`
+
+`}`
+
+`}`
+
+运行结果：
+
+![](/assets/image22_3.png)
+
+这段程序有什么问题，首先Lift.java 这个文件有点长，长的原因是我们在程序中使用了大量的switch…case 这样的判断（if…else 也是一样）；其次，扩展性非常的不好，电梯还有两个状态没有加，通电状态和断电状态；再其次，我们来思考我们的业务，电梯在门敞开状态下就不能上下跑了吗？电梯有没有发生过只有运行没有停止状态呢（从40 层直接坠到1 层嘛）？电梯故障嘛，还有电梯在检修的时候，可以在stop状态下不开门，这也是正常的业务需求呀，你想想看，如果加上这些判断条件，上面的程序有多少需要修改？业务上的任务一个小小增加或改动都对我们的这个电梯类产生了修改。  
+         刚刚我们是从电梯的有哪些方法以及这些方法执行的条件去分析，现在我们换个角度来看问题，我们来想电梯在具有这些状态的时候，能够做什么事情，也就是说在电梯处于一个具体状态时，我们来思考这个状态是由什么动作触发而产生以及在这个状态下电梯还能做什么事情，举个例子来说，电梯在停止状态时，我们来思考两个问题：
+
+        第一、这个停止状态时怎么来的，那当然是由于电梯执行了stop 方法而来的；  
+         第二、在停止状态下，电梯还能做什么动作?继续运行？开门？那当然都可以了。  
+        我们再来分析其他三个状态，也都是一样的结果，我们只要实现电梯在一个状态下的两个任务模型就可以了：这个状态是如何产生的以及在这个状态下还能做什么其他动作（也就是这个状态怎么过渡到其他状态）
+
+demo2:
+
+`public abstract class LiftState {`
+
+`	protected Context context;`
+
+`	public void setContext(Context context) {`
+
+`		this.context = context;`
 
 `	}`
 
-`	private void stopWithoutLogic() {`
+`	public abstract void open();`
 
-`		System.out.println("电梯停止了");`
+`	public abstract void close();`
 
-`	}`
+`	public abstract void run();`
+
+`	public abstract void stop();`
+
+`}`
+
+`public class Context {`
+
+`	public final static OpenningState openningState=new OpenningState();`
+
+`	public final static ClosingState closingState = new ClosingState();`
+
+`	public final static RunningState runningState = new RunningState();`
+
+`	public final static StoppingState stoppingState = new StoppingState();`
+
+`	private LiftState liftState;`
+
+`	public LiftState getLiftState() {`
+
+`		return liftState;`
+
+`	}`
+
+`	public void setLiftState(LiftState liftState) {`
+
+`		this.liftState = liftState;`
+
+`		this.liftState.setContext(this);`
+
+`	}`
 
 `	public void open() {`
 
-`		switch (this.state) {`
+`		this.liftState.open();		`
 
-`		case OPENING_STATE:			`
-
-`			break;`
-
-`		case CLOSING_STATE:`
-
-`			this.openWithoutLogic();`
-
-`			this.setState(OPENING_STATE);`
-
-`			break;`
-
-`		case RUNNING_STATE:`
-
-`			break;`
-
-`		case STOPPING_STATE:`
-
-`			this.openWithoutLogic();`
-
-`			this.setState(OPENING_STATE);`
-
-`			break;`
-
-`		default:`
-
-`			break;`
-
-`		}`
-
-`	}`
+`	}`
 
 `	public void close() {`
 
-`		switch (this.state) {`
+`		this.liftState.close();`
 
-`		case OPENING_STATE:`
-
-`			this.closeWithoutLogic();`
-
-`			this.setState(CLOSING_STATE);`
-
-`			break;`
-
-`		case CLOSING_STATE:`
-
-`			break;`
-
-`		case RUNNING_STATE:`
-
-`			break;`
-
-`		case STOPPING_STATE:`
-
-`			break;`
-
-`		default:`
-
-`			break;`
-
-`		}`
-
-`	}`
+`	}`
 
 `	public void run() {`
 
-`		switch (this.state) {`
+`		this.liftState.run();`
 
-`		case OPENING_STATE:			`
-
-`			break;`
-
-`		case CLOSING_STATE:`
-
-`			this.runWithoutLogic();`
-
-`			this.setState(RUNNING_STATE);`
-
-`			break;`
-
-`		case RUNNING_STATE:`
-
-`			break;`
-
-`		case STOPPING_STATE:`
-
-`			this.runWithoutLogic();`
-
-`			this.setState(RUNNING_STATE);`
-
-`			break;`
-
-`		default:`
-
-`			break;`
-
-`		}`
-
-`	}`
+`	}`
 
 `	public void stop() {`
 
-`		switch (this.state) {`
+`		this.liftState.stop();`
 
-`		case OPENING_STATE:			`
+`	}	`
 
-`			break;`
+`}`
 
-`		case CLOSING_STATE:`
+`public class OpenningState extends LiftState{`
 
-`			this.stopWithoutLogic();`
+`	@Override`
 
-`			this.setState(CLOSING_STATE);`
+`	public void open() {`
 
-`			break;`
+`		System.out.println("电梯门开启");`
 
-`		case RUNNING_STATE:`
+`	}`
 
-`			this.stopWithoutLogic();`
+`	@Override`
 
-`			this.setState(CLOSING_STATE);`
+`	public void close() {`
 
-`			break;`
+`		super.context.setLiftState(Context.closingState);`
 
-`		case STOPPING_STATE:`
+`		super.context.getLiftState().close();`
 
-`			break;`
+`	}`
 
-`		default:`
+`	@Override`
 
-`			break;`
+`	public void run() {`
 
-`		}`
+`	}`
 
-`	}	`
+`	@Override`
+
+`	public void stop() {`
+
+`	}	`
+
+`}`
+
+`public class ClosingState extends LiftState{`
+
+`	@Override`
+
+`	public void open() {`
+
+`		super.context.setLiftState(Context.openningState);`
+
+`		super.context.getLiftState().open();`
+
+`	}`
+
+`	@Override`
+
+`	public void close() {`
+
+`		System.out.println("电梯门关闭");`
+
+`	}`
+
+`	@Override`
+
+`	public void run() {`
+
+`		super.context.setLiftState(Context.runningState);`
+
+`		super.context.getLiftState().run();`
+
+`	}`
+
+`	@Override`
+
+`	public void stop() {`
+
+`		super.context.setLiftState(Context.stoppingState);`
+
+`		super.context.getLiftState().stop();`
+
+`	}	`
+
+`}`
+
+`public class RunningState extends LiftState{`
+
+`	@Override`
+
+`	public void open() {`
+
+`	}`
+
+`	@Override`
+
+`	public void close() {`
+
+`	}`
+
+`	@Override`
+
+`	public void run() {`
+
+`		System.out.println("电梯上下跑");`
+
+`	}`
+
+`	@Override`
+
+`	public void stop() {`
+
+`		super.context.setLiftState(Context.stoppingState);`
+
+`		super.context.getLiftState().stop();`
+
+`	}	`
+
+`}`
+
+`public class StoppingState extends LiftState{`
+
+`	@Override`
+
+`	public void open() {`
+
+`		super.context.setLiftState(Context.openningState);`
+
+`		super.context.getLiftState().open();`
+
+`	}`
+
+`	@Override`
+
+`	public void close() {`
+
+`	}`
+
+`	@Override`
+
+`	public void run() {`
+
+`		super.context.setLiftState(Context.runningState);`
+
+`		super.context.getLiftState().run();`
+
+`	}`
+
+`	@Override`
+
+`	public void stop() {`
+
+`		System.out.println("电梯停止了");`
+
+`	}	`
 
 `}`
 
@@ -294,17 +573,17 @@ demo1:四个状态的执行都有前置条件:
 
 `	public static void main(String[] args) {`
 
-`		ILift lift = new Lift();`
+`		Context context = new Context();`
 
-`		lift.setState(ILift.STOPPING_STATE);`
+`		context.setLiftState(new ClosingState());`
 
-`		lift.open();`
+`		context.open();`
 
-`		lift.close();`
+`		context.close();`
 
-`		lift.run();`
+`		context.run();`
 
-`		lift.stop();`
+`		context.stop();`
 
 `	}`
 
@@ -312,7 +591,7 @@ demo1:四个状态的执行都有前置条件:
 
 运行结果：
 
-![](/assets/image22_3.png)
+![](/assets/image22_4.png)
 
 
 
