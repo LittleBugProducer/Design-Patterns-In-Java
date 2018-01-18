@@ -18,295 +18,252 @@
 
 案例：
 
-银行存款与撤销\(http://wuhongyu.iteye.com/blog/2027964\)
+银行存款与撤销\([http://wuhongyu.iteye.com/blog/2027964\](http://wuhongyu.iteye.com/blog/2027964\)\)
 
-//命令的抽象类
+`//银行系统Receiver`
 
-//银行系统Receiver
+`public class Ccb {`
 
-public class Ccb {
+```
+public void saveMoney\(long amount\) {
 
-
-
-	public void saveMoney\(long amount\) {
-
-		System.out.println\("向建设银行存入金额"+amount\);
-
-	}
-
-	public void fetchMoney\(long amount\) {
-
-		System.out.println\("从建设银行取出金额"+amount\);
-
-	}
+    System.out.println\("向建设银行存入金额"+amount\);
 
 }
 
-//银行系统Receiver
+public void fetchMoney\(long amount\) {
 
-public class Cmb {
+    System.out.println\("从建设银行取出金额"+amount\);
+
+}
+```
+
+`}`
+
+`//银行系统Receiver`
+
+`public class Cmb {`
+
+```
+public void quQian\(long amoung\) {
+
+    System.out.println\("从招商银行取出金额"+amoung\);
+
+}
+
+public void cunQian\(long amount\) {
+
+    System.out.println\("向招商银行存入金额"+amount\);
+
+}
+```
+
+`}`
+
+`//命令的抽象类`
+
+`public interface Command {`
+
+```
+void execute\(\);
+
+void undo\(\);
+```
+
+`}`
+
+`public class CcbDepositCommand implements Command{`
+
+```
+private Ccb ccb = new Ccb\(\);
 
 
+@Override
 
-	public void quQian\(long amoung\) {
+public void execute\(\) {
 
-		System.out.println\("从招商银行取出金额"+amoung\);
+    ccb.saveMoney\(100\);
 
-	}
+}
 
-	public void cunQian\(long amount\) {
+@Override
 
-		System.out.println\("向招商银行存入金额"+amount\);
+public void undo\(\) {
 
-	}
+    ccb.fetchMoney\(100\);
+
+}
+```
+
+`}`
+
+`public class CcbWithdrawCommand implements Command{`
+
+```
+private Ccb ccb = new Ccb\(\);
+
+@Override
+
+public void execute\(\) {
+
+    ccb.fetchMoney\(100\);
+
+}
+
+@Override
+
+public void undo\(\) {
+
+    ccb.saveMoney\(100\);
+
+}
+```
+
+`}`
+
+`public class CmbDepositCommand implements Command{`
+
+```
+private Cmb cmb = new Cmb\(\);
+
+@Override
+
+public void execute\(\) {
+
+    cmb.cunQian\(100\);
+
+}
+
+@Override
+
+public void undo\(\) {
+
+    cmb.quQian\(100\);
+
+}
+```
+
+`}`
+
+`public class CmbWithdrawCommand implements Command{`
+
+```
+private Cmb cmb = new Cmb\(\);
+
+
+@Override
+
+public void execute\(\) {
+
+    cmb.quQian\(100\);
 
 }
 
 
+@Override
 
-//命令的抽象类
+public void undo\(\) {
 
-public interface Command {
+    cmb.cunQian\(100\);
 
+}
+```
 
+`}`
 
-	void execute\(\);
+`public class NoCommand implements Command{`
 
-	void undo\(\);
+```
+@Override
+
+public void execute\(\) {
 
 }
 
-public class CcbDepositCommand implements Command{
+
+@Override
+
+public void undo\(\) {
+
+}
+```
+
+`}`
+
+`//调用者invoker`
+
+`public class ATM {`
+
+```
+private Command\[\] commands;
 
 
+public ATM\(\) {
 
-	private Ccb ccb = new Ccb\(\);
-
-	
-
-	@Override
-
-	public void execute\(\) {
-
-		ccb.saveMoney\(100\);
-
-	}
-
-
-
-	@Override
-
-	public void undo\(\) {
-
-		ccb.fetchMoney\(100\);
-
-	}
-
-	
-
-
+    this.commands = new Command\[\] {new NoCommand\(\)};
 
 }
 
-public class CcbWithdrawCommand implements Command{
 
+public void setCommand\(Command command\[\]\) {
 
-
-	private Ccb ccb = new Ccb\(\);
-
-
-
-	@Override
-
-	public void execute\(\) {
-
-		ccb.fetchMoney\(100\);
-
-	}
-
-
-
-	@Override
-
-	public void undo\(\) {
-
-		ccb.saveMoney\(100\);
-
-	}
-
-	
-
-	
+    this.commands = command;
 
 }
 
-public class CmbDepositCommand implements Command{
 
+public void action\(int i\) {
 
-
-	private Cmb cmb = new Cmb\(\);
-
-	
-
-	@Override
-
-	public void execute\(\) {
-
-		cmb.cunQian\(100\);
-
-	}
-
-
-
-	@Override
-
-	public void undo\(\) {
-
-		cmb.quQian\(100\);
-
-	}
-
-	
-
-
+    this.commands\[i\].execute\(\);
 
 }
 
-public class CmbWithdrawCommand implements Command{
+public void cancel\(int i\) {
 
-
-
-	private Cmb cmb = new Cmb\(\);
-
-	
-
-	@Override
-
-	public void execute\(\) {
-
-		cmb.quQian\(100\);
-
-	}
-
-
-
-	@Override
-
-	public void undo\(\) {
-
-		cmb.cunQian\(100\);
-
-	}
-
-	
-
-
+    this.commands\[i\].undo\(\);
 
 }
+```
 
-public class NoCommand implements Command{
+`}`
 
+`//使用ATM的人就是客户端Client`
 
+`public class Test {`
 
-	@Override
+```
+public static void main\(String\[\] args\) {
 
-	public void execute\(\) {
+    ATM atm = new ATM\(\);
 
-	}
+    Command\[\] commands = new Command\[3\];
 
+    commands\[0\] = new CcbDepositCommand\(\);
 
+    commands\[1\]=new CcbWithdrawCommand\(\);
 
-	@Override
+    commands\[2\]=new CmbWithdrawCommand\(\);
 
-	public void undo\(\) {
+    atm.setCommand\(commands\);
 
-	}
+    atm.action\(0\);
 
+    atm.cancel\(0\);
 
+    atm.action\(1\);
 
-}
+    atm.cancel\(1\);
 
-//调用者invoker
+    atm.action\(2\);
 
-public class ATM {
-
-
-
-	private Command\[\] commands;
-
-	
-
-	public ATM\(\) {
-
-		this.commands = new Command\[\] {new NoCommand\(\)};
-
-	}
-
-	
-
-	public void setCommand\(Command command\[\]\) {
-
-		this.commands = command;
-
-	}
-
-	
-
-	public void action\(int i\) {
-
-		this.commands\[i\].execute\(\);
-
-	}
-
-	public void cancel\(int i\) {
-
-		this.commands\[i\].undo\(\);
-
-	}
+    atm.cancel\(2\);
 
 }
+```
 
-//使用ATM的人就是客户端Client
-
-public class Test {
-
-
-
-	public static void main\(String\[\] args\) {
-
-		ATM atm = new ATM\(\);
-
-		Command\[\] commands = new Command\[3\];
-
-		commands\[0\] = new CcbDepositCommand\(\);
-
-		commands\[1\]=new CcbWithdrawCommand\(\);
-
-		commands\[2\]=new CmbWithdrawCommand\(\);
-
-		atm.setCommand\(commands\);
-
-		atm.action\(0\);
-
-		atm.cancel\(0\);
-
-		atm.action\(1\);
-
-		atm.cancel\(1\);
-
-		atm.action\(2\);
-
-		atm.cancel\(2\);
-
-		
-
-	}
-
-}
+`}`
 
 运行结果：
 
 ![](/assets/image24_1.png)
-
-
 
