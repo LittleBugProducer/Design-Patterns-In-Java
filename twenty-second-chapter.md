@@ -341,257 +341,339 @@ demo1:四个状态的执行都有前置条件:
 ![](/assets/image22_3.png)
 
 这段程序有什么问题，首先Lift.java 这个文件有点长，长的原因是我们在程序中使用了大量的switch…case 这样的判断（if…else 也是一样）；其次，扩展性非常的不好，电梯还有两个状态没有加，通电状态和断电状态；再其次，我们来思考我们的业务，电梯在门敞开状态下就不能上下跑了吗？电梯有没有发生过只有运行没有停止状态呢（从40 层直接坠到1 层嘛）？电梯故障嘛，还有电梯在检修的时候，可以在stop状态下不开门，这也是正常的业务需求呀，你想想看，如果加上这些判断条件，上面的程序有多少需要修改？业务上的任务一个小小增加或改动都对我们的这个电梯类产生了修改。  
-         刚刚我们是从电梯的有哪些方法以及这些方法执行的条件去分析，现在我们换个角度来看问题，我们来想电梯在具有这些状态的时候，能够做什么事情，也就是说在电梯处于一个具体状态时，我们来思考这个状态是由什么动作触发而产生以及在这个状态下电梯还能做什么事情，举个例子来说，电梯在停止状态时，我们来思考两个问题：
+         刚刚我们是从电梯的有哪些方法以及这些方法执行的条件去分析，现在我们换个角度来看问题，我们来想电梯在具有这些状态的时候，能够做什么事情，也就是说在电梯处于一个具体状态时，我们来思考这个状态是由什么动作触发而产生以及在这个状态下电梯还能做什么事情，举个例子来说，电梯在停止状态时，我们来思考两个问题：
 
-        第一、这个停止状态时怎么来的，那当然是由于电梯执行了stop 方法而来的；  
-         第二、在停止状态下，电梯还能做什么动作?继续运行？开门？那当然都可以了。  
-        我们再来分析其他三个状态，也都是一样的结果，我们只要实现电梯在一个状态下的两个任务模型就可以了：这个状态是如何产生的以及在这个状态下还能做什么其他动作（也就是这个状态怎么过渡到其他状态）
+```
+    第一、这个停止状态时怎么来的，那当然是由于电梯执行了stop 方法而来的；  
+     第二、在停止状态下，电梯还能做什么动作?继续运行？开门？那当然都可以了。  
+    我们再来分析其他三个状态，也都是一样的结果，我们只要实现电梯在一个状态下的两个任务模型就可以了：这个状态是如何产生的以及在这个状态下还能做什么其他动作（也就是这个状态怎么过渡到其他状态）
+```
 
 demo2:
 
-`public abstract class LiftState {`
+`public abstract class LiftState {`
 
-`	protected Context context;`
+`protected Context context;`
 
-`	public void setContext(Context context) {`
+`public void setContext(Context context) {`
 
-`		this.context = context;`
-
-`	}`
-
-`	public abstract void open();`
-
-`	public abstract void close();`
-
-`	public abstract void run();`
-
-`	public abstract void stop();`
+`this.context = context;`
 
 `}`
 
-`public class Context {`
+`public abstract void open();`
 
-`	public final static OpenningState openningState=new OpenningState();`
+`public abstract void close();`
 
-`	public final static ClosingState closingState = new ClosingState();`
+`public abstract void run();`
 
-`	public final static RunningState runningState = new RunningState();`
+\`    public abstract void stop\(\);
 
-`	public final static StoppingState stoppingState = new StoppingState();`
-
-`	private LiftState liftState;`
-
-`	public LiftState getLiftState() {`
-
-`		return liftState;`
-
-`	}`
-
-`	public void setLiftState(LiftState liftState) {`
-
-`		this.liftState = liftState;`
-
-`		this.liftState.setContext(this);`
-
-`	}`
-
-`	public void open() {`
-
-`		this.liftState.open();		`
-
-`	}`
-
-`	public void close() {`
-
-`		this.liftState.close();`
-
-`	}`
-
-`	public void run() {`
-
-`		this.liftState.run();`
-
-`	}`
-
-`	public void stop() {`
-
-`		this.liftState.stop();`
-
-`	}	`
-
-`}`
-
-`public class OpenningState extends LiftState{`
-
-`	@Override`
-
-`	public void open() {`
-
-`		System.out.println("电梯门开启");`
-
-`	}`
-
-`	@Override`
-
-`	public void close() {`
-
-`		super.context.setLiftState(Context.closingState);`
-
-`		super.context.getLiftState().close();`
-
-`	}`
-
-`	@Override`
-
-`	public void run() {`
-
-`	}`
-
-`	@Override`
-
-`	public void stop() {`
-
-`	}	`
+\`
 
 `}`
 
-`public class ClosingState extends LiftState{`
+\`public class Context {
 
-`	@Override`
+\`
 
-`	public void open() {`
+`public final static OpenningState openningState=new OpenningState();`
 
-`		super.context.setLiftState(Context.openningState);`
+`public final static ClosingState closingState = new ClosingState();`
 
-`		super.context.getLiftState().open();`
+`public final static RunningState runningState = new RunningState();`
 
-`	}`
+`public final static StoppingState stoppingState = new StoppingState();`
 
-`	@Override`
+`private LiftState liftState;`
 
-`	public void close() {`
+`public LiftState getLiftState() {`
 
-`		System.out.println("电梯门关闭");`
-
-`	}`
-
-`	@Override`
-
-`	public void run() {`
-
-`		super.context.setLiftState(Context.runningState);`
-
-`		super.context.getLiftState().run();`
-
-`	}`
-
-`	@Override`
-
-`	public void stop() {`
-
-`		super.context.setLiftState(Context.stoppingState);`
-
-`		super.context.getLiftState().stop();`
-
-`	}	`
+`return liftState;`
 
 `}`
 
-`public class RunningState extends LiftState{`
+`public void setLiftState(LiftState liftState) {`
 
-`	@Override`
+`this.liftState = liftState;`
 
-`	public void open() {`
-
-`	}`
-
-`	@Override`
-
-`	public void close() {`
-
-`	}`
-
-`	@Override`
-
-`	public void run() {`
-
-`		System.out.println("电梯上下跑");`
-
-`	}`
-
-`	@Override`
-
-`	public void stop() {`
-
-`		super.context.setLiftState(Context.stoppingState);`
-
-`		super.context.getLiftState().stop();`
-
-`	}	`
+`this.liftState.setContext(this);`
 
 `}`
 
-`public class StoppingState extends LiftState{`
+`public void open() {`
 
-`	@Override`
+\`        this.liftState.open\(\);
 
-`	public void open() {`
-
-`		super.context.setLiftState(Context.openningState);`
-
-`		super.context.getLiftState().open();`
-
-`	}`
-
-`	@Override`
-
-`	public void close() {`
-
-`	}`
-
-`	@Override`
-
-`	public void run() {`
-
-`		super.context.setLiftState(Context.runningState);`
-
-`		super.context.getLiftState().run();`
-
-`	}`
-
-`	@Override`
-
-`	public void stop() {`
-
-`		System.out.println("电梯停止了");`
-
-`	}	`
+\`
 
 `}`
 
-`public class Test {`
+`public void close() {`
 
-`	public static void main(String[] args) {`
+`this.liftState.close();`
 
-`		Context context = new Context();`
+`}`
 
-`		context.setLiftState(new ClosingState());`
+`public void run() {`
 
-`		context.open();`
+`this.liftState.run();`
 
-`		context.close();`
+`}`
 
-`		context.run();`
+`public void stop() {`
 
-`		context.stop();`
+`this.liftState.stop();`
 
-`	}`
+\`    }
+
+\`
+
+`}`
+
+\`public class OpenningState extends LiftState{
+
+\`
+
+`@Override`
+
+`public void open() {`
+
+`System.out.println("电梯门开启");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void close() {`
+
+`super.context.setLiftState(Context.closingState);`
+
+`super.context.getLiftState().close();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void run() {`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void stop() {`
+
+\`    }
+
+\`
+
+`}`
+
+\`public class ClosingState extends LiftState{
+
+\`
+
+`@Override`
+
+`public void open() {`
+
+`super.context.setLiftState(Context.openningState);`
+
+`super.context.getLiftState().open();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void close() {`
+
+`System.out.println("电梯门关闭");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void run() {`
+
+`super.context.setLiftState(Context.runningState);`
+
+`super.context.getLiftState().run();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void stop() {`
+
+`super.context.setLiftState(Context.stoppingState);`
+
+`super.context.getLiftState().stop();`
+
+\`    }
+
+\`
+
+`}`
+
+\`public class RunningState extends LiftState{
+
+\`
+
+`@Override`
+
+`public void open() {`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void close() {`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void run() {`
+
+`System.out.println("电梯上下跑");`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void stop() {`
+
+`super.context.setLiftState(Context.stoppingState);`
+
+`super.context.getLiftState().stop();`
+
+\`    }
+
+\`
+
+`}`
+
+\`public class StoppingState extends LiftState{
+
+\`
+
+`@Override`
+
+`public void open() {`
+
+`super.context.setLiftState(Context.openningState);`
+
+`super.context.getLiftState().open();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void close() {`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void run() {`
+
+`super.context.setLiftState(Context.runningState);`
+
+`super.context.getLiftState().run();`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public void stop() {`
+
+`System.out.println("电梯停止了");`
+
+\`    }
+
+\`
+
+`}`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`Context context = new Context();`
+
+`context.setLiftState(new ClosingState());`
+
+`context.open();`
+
+`context.close();`
+
+`context.run();`
+
+`context.stop();`
+
+`}`
 
 `}`
 
 运行结果：
 
 ![](/assets/image22_4.png)
+
+### 定义：
+
+当一个对象内在状态改变时允许其改变行为，这个对象看起来像是改变了其类
+
+### 角色：
+
+上下文环境（Context）：它定义了客户程序需要的接口并维护一个具体状态角色的实例，将与状态相关的操作委托给当前的Concrete State对象来处理。
+
+抽象状态（State）：定义一个接口以封装使用上下文环境的的一个特定状态相关的行为。
+
+具体状态（Concrete State）：实现抽象状态定义的接口。
+
+### 优点
+
+状态模式将与特定状态相关的行为局部化，并且将不同状态的行为分割开来。
+
+ 所有状态相关的代码都存在于某个ConcereteState中，所以通过定义新的子类很容易地增加新的状态和转换。
+
+状态模式通过把各种状态转移逻辑分到State的子类之间，来减少相互间的依赖。
+
+### 缺点
+
+ 导致较多的ConcreteState子类
+
+### 适用场景
+
+ 当一个对象的行为取决于它的状态，并且它必须在运行时刻根据状态改变它的行为时，就可以考虑使用状态模式来。
+
+一个操作中含有庞大的分支结构，并且这些分支决定于对象的状态。
 
 
 
