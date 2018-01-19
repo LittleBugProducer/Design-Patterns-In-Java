@@ -28,6 +28,6 @@
 * [Twenty-fifth Chapter\(Interpreter\)](twenty-fifth-chapter.md)
 * [Twenty-sixth Chapter](twenty-sixth-chapter.md)
 * [Twenty-seventh Chapter\(Decorator\)](twenty-seventh-chapterdecorator.md)
-* Twenty-eighth Chapter\(Iterator\)
+* [Twenty-eighth Chapter\(Iterator\)](twenty-eighth-chapteriterator.md)
 * Twenty-ninth Chapter\(Visitor\)
 
