@@ -26,4 +26,8 @@
 * [Thenty-third Chapter\(Strategy\)](thenty-third-chapter.md)
 * [Twenty-fourth Chapter\(Command\)](twenty-fourth-chaptercommand.md)
 * [Twenty-fifth Chapter\(Interpreter\)](twenty-fifth-chapter.md)
+* [Twenty-sixth Chapter](twenty-sixth-chapter.md)
+* [Twenty-seventh Chapter\(Decorator\)](twenty-seventh-chapterdecorator.md)
+* Twenty-eighth Chapter\(Iterator\)
+* Twenty-ninth Chapter\(Visitor\)
 
