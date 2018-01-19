@@ -268,9 +268,227 @@ public static void main\(String\[\] args\) {
 
 另一个案例：
 
-\(https://www.jianshu.com/p/80b9cd7c0da5\)
+\([https://www.jianshu.com/p/80b9cd7c0da5\](https://www.jianshu.com/p/80b9cd7c0da5\)\)
 
 老板和会计查看账单
+
+`public interface Bill {`
+
+`	void accept(AccountBookView viewer);`
+
+`}`
+
+`public class ConsumerBill implements Bill{`
+
+`	private String item;`
+
+`	private double amount;	`
+
+`	public ConsumerBill(String item,double amount) {`
+
+`		this.item = item;`
+
+`		this.amount = amount;`
+
+`	}	`
+
+`	public String getItem() {`
+
+`		return item;`
+
+`	}	`
+
+`	public double getAmount() {`
+
+`		return amount;`
+
+`	}		`
+
+`	@Override`
+
+`	public void accept(AccountBookView viewer) {`
+
+`		viewer.view(this);`
+
+`	}	`
+
+`}`
+
+`public class IncomeBill implements Bill{`
+
+`	private String item;`
+
+`	private double amount;	`
+
+`	public IncomeBill(String item,double amount) {`
+
+`		this.item = item;`
+
+`		this.amount = amount;`
+
+`	}	`
+
+`	public String getItem() {`
+
+`		return item;`
+
+`	}	`
+
+`	public double getAmount() {`
+
+`		return amount;`
+
+`	}	`
+
+`	@Override`
+
+`	public void accept(AccountBookView viewer) {`
+
+`		viewer.view(this);`
+
+`	}`
+
+`}`
+
+`public interface AccountBookView {`
+
+`	void view(ConsumerBill oConsumerBill);	`
+
+`	void view(IncomeBill incomeBill);`
+
+`}`
+
+`public class Boss implements AccountBookView{`
+
+`	private double totalConsume;`
+
+`	private double totalIncome;	`
+
+`	@Override`
+
+`	public void view(ConsumerBill oConsumerBill) {`
+
+`		totalConsume = totalConsume+oConsumerBill.getAmount();`
+
+`	}`
+
+`	@Override`
+
+`	public void view(IncomeBill incomeBill) {`
+
+`		totalIncome+=incomeBill.getAmount();`
+
+`	}`
+
+`	public void getTotalConsume() {`
+
+`		System.out.println("老板一共消费了"+totalConsume);`
+
+`	}`
+
+`	public void getTotalIncome() {`
+
+`		System.out.println("老板一共收入了"+totalIncome);`
+
+`	}	`
+
+`}`
+
+`public class CPA implements AccountBookView{`
+
+`	int count = 0;	`
+
+`	public void view(ConsumerBill consumerBill) {`
+
+`		count++;`
+
+`		if(consumerBill.getItem().equals("消费")) {`
+
+`			System.out.println("第"+count+"个单子消费了:"+consumerBill.getAmount());`
+
+`		}`
+
+`	}`
+
+`	public void view(IncomeBill incomeBill) {`
+
+`		count++;`
+
+`		if(incomeBill.getItem().equals("收入")) {`
+
+`			System.out.println("第"+count+"个单子收入了:"+incomeBill.getAmount());`
+
+`		}`
+
+`	}`
+
+`}`
+
+`public class AccountBook {`
+
+`	private List<Bill>listBill = new ArrayList<Bill>();`
+
+`	public void add(Bill bill) {`
+
+`		listBill.add(bill);`
+
+`	}`
+
+`	public void show(AccountBookView viewer) {`
+
+`		for(Bill b:listBill) {`
+
+`			b.accept(viewer);`
+
+`		}`
+
+`	}`
+
+`}`
+
+`public class Test {`
+
+`	public static void main(String[] args) {`
+
+`		Bill consumerBill = new ConsumerBill("消费", 3000);`
+
+`		Bill incomeBill = new IncomeBill("收入", 4000);`
+
+`		Bill consumerBill2 = new ConsumerBill("消费", 5000);`
+
+`		Bill incomeBill2 = new IncomeBill("收入", 10000);`
+
+`		AccountBook accountBook = new AccountBook();`
+
+`		accountBook.add(consumerBill);`
+
+`		accountBook.add(incomeBill);`
+
+`		accountBook.add(consumerBill2);`
+
+`		accountBook.add(incomeBill2);`
+
+`		AccountBookView boss = new Boss();`
+
+`		AccountBookView cpa = new CPA();`
+
+`		accountBook.show(boss);`
+
+`		accountBook.show(cpa);`
+
+`		((Boss)boss).getTotalConsume();`
+
+`		((Boss)boss).getTotalIncome();`
+
+`	}`
+
+`}`
+
+运行结果：
+
+![](/assets/image29_2.png)
+
+理解帮助，用面向对象的思想，将账单看作主体。
 
 
 
