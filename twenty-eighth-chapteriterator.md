@@ -10,161 +10,191 @@
 
 \(2\)具体迭代器角色（Concrete Iterator）：实现迭代器接口中定义的方法，完成集合的迭代。
 
-\(3\)容器角色\(Aggregate\):  一般是一个接口，提供一个iterator\(\)方法，例如java中的Collection接口，List接口，Set接口等
+\(3\)容器角色\(Aggregate\):  一般是一个接口，提供一个iterator\(\)方法，例如java中的Collection接口，List接口，Set接口等
 
 \(4\)具体容器角色（ConcreteAggregate）：就是抽象容器的具体实现类，比如List接口的有序列表实现ArrayList，List接口的链表实现LinkList，Set接口的哈希列表的实现HashSet等。
 
-案例：
+案例\(**https://www.cnblogs.com/ysw-go/p/5384516.html**\)：
 
-`//迭代器角色`
+`//迭代器角色`
 
-`public interface Iterator {`
+\`public interface Iterator {
 
-`	boolean hasNext();`
+\`
 
-`	Object next();`
+`boolean hasNext();`
+
+`Object next();`
 
 `}`
 
-`//具体迭代器角色`
+`//具体迭代器角色`
 
-`public class ConcreteIterator implements Iterator{`
+\`public class ConcreteIterator implements Iterator{
 
-`	private List list = null;`
+\`
 
-`	private int index;	`
+`private List list = null;`
 
-`	public ConcreteIterator(List list) {`
+\`    private int index;
 
-`		super();`
+\`
 
-`		this.list = list;`
+`public ConcreteIterator(List list) {`
 
-`	}	`
+`super();`
 
-`	@Override`
+`this.list = list;`
 
-`	public boolean hasNext() {`
+\`    }
 
-`		if(index>=list.getSize()) {`
+\`
 
-`			return false;`
+`@Override`
 
-`		}`
+`public boolean hasNext() {`
 
-`		return true;`
+`if(index>=list.getSize()) {`
 
-`	}`
+`return false;`
 
-`	@Override`
+`}`
 
-`	public Object next() {`
+`return true;`
 
-`		Object object = list.get(index);`
+\`    }
 
-`		index++;`
+\`
 
-`		return object;`
+`@Override`
 
-`	}	`
+`public Object next() {`
 
-`}`
+`Object object = list.get(index);`
 
-`//定义容器角色`
+`index++;`
 
-`public interface List {`
+`return object;`
 
-`	public void add(Object obj);`
+\`    }
 
-`	public Object get(int index);`
+\`
 
-`	public Iterator iterator();`
+`}`
 
-`	public int getSize();`
+`//定义容器角色`
 
-`}`
+\`public interface List {
 
-`//定义具体容器角色`
+\`
 
-`public class ConcreteAggregate implements List{`
+`public void add(Object obj);`
 
-`	private Object[] list;`
+`public Object get(int index);`
 
-`	private int size=0;`
+`public Iterator iterator();`
 
-`	private int index=0;	`
+`public int getSize();`
 
-`	public ConcreteAggregate() {`
+`}`
 
-`		index = 0;`
+`//定义具体容器角色`
 
-`		size = 0;`
+\`public class ConcreteAggregate implements List{
 
-`		list = new Object[100];`
+\`
 
-`	}	`
+`private Object[] list;`
 
-`	@Override`
+`private int size=0;`
 
-`	public void add(Object obj) {`
+\`    private int index=0;
 
-`		list[index++]=obj;`
+\`
 
-`		size++;`
+`public ConcreteAggregate() {`
 
-`	}`
+`index = 0;`
 
-`	@Override`
+`size = 0;`
 
-`	public Object get(int index) {`
+`list = new Object[100];`
 
-`		return list[index];`
+\`    }
 
-`	}`
+\`
 
-`	@Override`
+`@Override`
 
-`	public Iterator iterator() {`
+`public void add(Object obj) {`
 
-`		return new ConcreteIterator(this);`
+`list[index++]=obj;`
 
-`	}`
+`size++;`
 
-`	@Override`
+\`    }
 
-`	public int getSize() {`
+\`
 
-`		return size;`
+`@Override`
 
-`	}`
+`public Object get(int index) {`
 
-`}`
+`return list[index];`
 
-`public class Test {`
+\`    }
 
-`	public static void main(String[] args) {`
+\`
 
-`		List list = new ConcreteAggregate();`
+`@Override`
 
-`		list.add("a");`
+`public Iterator iterator() {`
 
-`		list.add("b");`
+`return new ConcreteIterator(this);`
 
-`		list.add("c");`
+\`    }
 
-`		list.add("d");`
+\`
 
-`		Iterator it = list.iterator();`
+`@Override`
 
-`		while(it.hasNext()) {`
+`public int getSize() {`
 
-`			System.out.println(it.next());`
+`return size;`
 
-`		}`
+\`    }
 
-`	}`
+\`
 
-`}`
+`}`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`List list = new ConcreteAggregate();`
+
+`list.add("a");`
+
+`list.add("b");`
+
+`list.add("c");`
+
+`list.add("d");`
+
+`Iterator it = list.iterator();`
+
+`while(it.hasNext()) {`
+
+`System.out.println(it.next());`
+
+`}`
+
+`}`
+
+`}`
 
 运行结果：
 
@@ -179,10 +209,6 @@
 ### 缺点：
 
 * 对于比较简单的遍历（像数组或者有序列表），使用迭代器方式遍历较为繁琐，大家可能都有感觉，像ArrayList，我们宁可愿意使用for循环和get方法来遍历集合。
-
-
-
-
 
 
 
