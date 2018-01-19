@@ -6,151 +6,185 @@
 
 角色：
 
- 抽象组件（Component）：需要装饰的抽象对象。
+抽象组件（Component）：需要装饰的抽象对象。
 
- 具体组件（ConcreteComponent）：是我们需要装饰的对象
+具体组件（ConcreteComponent）：是我们需要装饰的对象
 
- 抽象装饰类（Decorator）：内含指向抽象组件的引用及装饰者共有的方法。
+抽象装饰类（Decorator）：内含指向抽象组件的引用及装饰者共有的方法。
 
- 具体装饰类（ConcreteDecorator）：被装饰的对象。
+具体装饰类（ConcreteDecorator）：被装饰的对象。
 
 案例：
 
-咖啡+奶+糖\(http://blog.csdn.net/wwh578867817/article/details/51480441\)
+咖啡+奶+糖\([http://blog.csdn.net/wwh578867817/article/details/51480441\](http://blog.csdn.net/wwh578867817/article/details/51480441\)\)
 
-`public interface Drink {`
+\`public interface Drink {
 
-`	public float cost();`
+\`
 
-`	public String getDescription();`
+`public float cost();`
 
-`}`
-
-`public class Coffee implements Drink{`
-
-`	final private String description="coffee";	`
-
-`	@Override`
-
-`	public float cost() {`
-
-`		return 10;`
-
-`	}`
-
-`	@Override`
-
-`	public String getDescription() {`
-
-`		return description;`
-
-`	}	`
-
-`}`
-
-`public class CondimentDecorator implements Drink{`
-
-`	protected Drink decoratorDrink;`
-
-`		public CondimentDecorator(Drink decoratorDrink) {`
-
-`		this.decoratorDrink = decoratorDrink;`
-
-`	}	`
-
-`	@Override`
-
-`	public float cost() {`
-
-`		return decoratorDrink.cost();`
-
-`	}`
-
-`	@Override`
-
-`	public String getDescription() {`
-
-`		return decoratorDrink.getDescription();`
-
-`	}	`
-
-`}`
-
-`public class Milk extends CondimentDecorator{`
-
-`	public Milk(Drink decoratorDrink) {`
-
-`		super(decoratorDrink);`
-
-`	}	`
-
-`	@Override`
-
-`	public float cost() {`
-
-`		return super.cost()+2;`
-
-`	}	`
-
-`	@Override`
-
-`	public String getDescription() {`
-
-`		return super.getDescription()+" milk";`
-
-`	}`
+`public String getDescription();`
 
 `}`
 
-`public class Sugar extends CondimentDecorator{`
+\`public class Coffee implements Drink{
 
-`	public Sugar(Drink decoratorDrink) {`
+\`
 
-`		super(decoratorDrink);		`
+\`    final private String description="coffee";
 
-`	}`
+\`
 
-`	@Override`
+`@Override`
 
-`	public float cost() {`
+`public float cost() {`
 
-`		return super.cost()+1;`
+`return 10;`
 
-`	}`
+\`    }
 
-`	@Override`
+\`
 
-`	public String getDescription() {`
+`@Override`
 
-`		return super.getDescription()+" sugar";`
+`public String getDescription() {`
 
-`	}	`
+`return description;`
+
+\`    }
+
+\`
 
 `}`
 
-`public class Test {`
+\`public class CondimentDecorator implements Drink{
 
-`	public static void main(String[] args) {`
+\`
 
-`		Drink drink = new Coffee();`
+`protected Drink decoratorDrink;`
 
-`		System.out.println(drink.getDescription()+":"+drink.cost());`
+`public CondimentDecorator(Drink decoratorDrink) {`
 
-`		drink = new Milk(drink);`
+`this.decoratorDrink = decoratorDrink;`
 
-`		System.out.println(drink.getDescription()+":"+drink.cost());`
+\`    }
 
-`		drink = new Sugar(drink);`
+\`
 
-`		System.out.println(drink.getDescription()+":"+drink.cost());`
+`@Override`
 
-`		drink = new Sugar(drink);`
+`public float cost() {`
 
-`		System.out.println(drink.getDescription()+":"+drink.cost());		`
+`return decoratorDrink.cost();`
 
-`	}`
+\`    }
 
-`}`
+\`
+
+`@Override`
+
+`public String getDescription() {`
+
+`return decoratorDrink.getDescription();`
+
+\`    }
+
+\`
+
+`}`
+
+`public class Milk extends CondimentDecorator{`
+
+`public Milk(Drink decoratorDrink) {`
+
+`super(decoratorDrink);`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public float cost() {`
+
+`return super.cost()+2;`
+
+\`    }
+
+\`
+
+`@Override`
+
+`public String getDescription() {`
+
+`return super.getDescription()+" milk";`
+
+\`    }
+
+\`
+
+`}`
+
+\`public class Sugar extends CondimentDecorator{
+
+\`
+
+`public Sugar(Drink decoratorDrink) {`
+
+\`        super\(decoratorDrink\);
+
+\`
+
+`}`
+
+`@Override`
+
+`public float cost() {`
+
+`return super.cost()+1;`
+
+`}`
+
+`@Override`
+
+`public String getDescription() {`
+
+`return super.getDescription()+" sugar";`
+
+\`    }
+
+\`
+
+`}`
+
+\`public class Test {
+
+\`
+
+`public static void main(String[] args) {`
+
+`Drink drink = new Coffee();`
+
+`System.out.println(drink.getDescription()+":"+drink.cost());`
+
+`drink = new Milk(drink);`
+
+`System.out.println(drink.getDescription()+":"+drink.cost());`
+
+`drink = new Sugar(drink);`
+
+`System.out.println(drink.getDescription()+":"+drink.cost());`
+
+`drink = new Sugar(drink);`
+
+\`        System.out.println\(drink.getDescription\(\)+":"+drink.cost\(\)\);
+
+\`
+
+`}`
+
+`}`
 
 运行结果：
 
@@ -160,7 +194,14 @@
 
 milk.getDescription-&gt;CondimentDecorator.getDescription-&gt;Coffee.getDescription-&gt;CondimentDecorator.getDescription-&gt;Milk.getDescription\(\)。
 
+### 优点：
 
+* 装饰类和被装饰类可以独立发展，不会相互耦合
+* 动态的将责任附加到对象身上。
+
+### 缺点：
+
+* 多层装饰比较复杂。
 
 
 
